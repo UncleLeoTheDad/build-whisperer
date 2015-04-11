@@ -1,0 +1,19 @@
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>Hudson builds</title>
+	<link type="text/html" rel="alternate"
+		href="http://">
+	</link>
+	<updated>2008-11-09T19:27:06Z</updated>
+	<author>
+		<name>Hudson Server</name>
+	</author>
+	<id>urn:uuid:903deee0-7bfa-11db-9fe1-0800200c9a66</id>
+	<entry>
+		<title>title #2872 (SUCCESS)</title>		
+		<published>2008-11-09T19:27:06Z</published>
+	</entry>
+	<entry>
+		<title>title #2873 (SUCCESS)</title>		
+		<published>2008-11-09T19:27:06Z</published>
+	</entry>
+</feed>

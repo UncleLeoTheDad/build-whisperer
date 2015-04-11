@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<!-- StatusRepository -->
+	<bean id="rssResource"
+		class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg index="0"
+			value="com/leohart/buildwhisperer/execution/blue.json" />
+	</bean>
+	
+	<bean id="buildStatusRepository"
+		class="com.leohart.buildwhisperer.repositories.hudson.json.HudsonJsonBuildStatusRepository">
+		<constructor-arg index="0" type="org.springframework.core.io.Resource" ref="rssResource" />
+	</bean>
+
+	<!-- Indicator -->
+	<bean id="indicator"
+		class="com.leohart.buildwhisperer.indicators.logger.PoweredLogBuildStatusIndicator">
+	</bean>
+	
+	<bean id="turnOffCriteria" class="com.leohart.buildwhisperer.indicators.WorkWeekTurnOffCriteria">
+		<property name="workWeekEndDay"><util:constant static-field="org.joda.time.DateTimeConstants.SATURDAY" /></property>
+	</bean>
+	
+	<bean id="partTimeIndicator" class="com.leohart.buildwhisperer.indicators.PartTimeDecorator">
+		<constructor-arg index="0" ref="indicator"/>
+		<constructor-arg index="1" ref="turnOffCriteria"/>
+	</bean>
+
+	<!-- Bridge -->
+	<bean id="buildStatusBridge"
+		class="com.leohart.buildwhisperer.bridges.SimpleBuildStatusBridge"
+		lazy-init="true">
+		<constructor-arg index="0" ref="partTimeIndicator" />
+		<constructor-arg index="1" ref="buildStatusRepository" />		
+	</bean>
+
+</beans>

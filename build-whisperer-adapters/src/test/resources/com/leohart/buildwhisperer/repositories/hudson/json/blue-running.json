@@ -1,0 +1,8 @@
+{ "description" : null,
+  "jobs" : [ { "color" : "blue_anime",
+        "name" : "whatever",
+        "url" : "whatever"
+      } ],
+  "name" : "whatever",
+  "url" : "http://whatever"
+}
