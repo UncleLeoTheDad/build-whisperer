@@ -1,0 +1,8 @@
+rootProject.name = 'build-whisperer'
+include ':build-whisperer-adapters'
+include ':build-whisperer-client'
+include ':build-whisperer-core'
+
+project(':build-whisperer-adapters').projectDir = "$rootDir/build-whisperer-adapters" as File
+project(':build-whisperer-client').projectDir = "$rootDir/build-whisperer-client" as File
+project(':build-whisperer-core').projectDir = "$rootDir/build-whisperer-core" as File

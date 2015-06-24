@@ -5,3 +5,10 @@ META-INF
 target
 target-eclipse
 .#webclasspath
+
+#gradle
+.gradle/
+gradlew
+gradlew.bat
+gradle/
+build/

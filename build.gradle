@@ -1,0 +1,24 @@
+allprojects  {
+  apply plugin: 'maven'
+
+  group = 'com.leohart'
+  version = '1.1.0-SNAPSHOT'
+}
+
+subprojects {
+  apply plugin: 'java'
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+  
+  repositories {
+    mavenLocal()
+    
+    maven { url "https://repository.jboss.org/nexus/" }
+    maven { url "http://download.java.net/maven/2/" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+  }
+
+  
+  
+  
+}
