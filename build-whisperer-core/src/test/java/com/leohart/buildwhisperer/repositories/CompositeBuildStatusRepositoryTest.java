@@ -1,5 +1,7 @@
 package com.leohart.buildwhisperer.repositories;
 
+import java.util.ArrayList;
+
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -15,7 +17,15 @@ public class CompositeBuildStatusRepositoryTest {
 
 	@Before
 	public void setUp() {
+		this.repository = new CompositeBuildStatusRepository(new ArrayList<BuildStatusRepository<BuildStatus>>());
+	}
+	
+	@Test
+	public void testThatEmptyListOfRepositoriesIsCreatedIfNoSetIsProvided(){
 		this.repository = new CompositeBuildStatusRepository();
+		
+		Assert.assertNotNull("Repository list should not have been null: ", this.repository);
+		Assert.assertEquals("Should have been 0 repositories added: ", 0, this.repository.getChildRepositories().size());
 	}
 
 	@Test

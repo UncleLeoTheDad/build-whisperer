@@ -10,9 +10,17 @@
 				value="%-5p [%d{dd/MM/yyyy HH:mm:ss}] %C(%L) - %m%n" />
 		</layout>
 	</appender>
+	
+	<logger name="com.leohart.buildwhisperer.repositories.json.hudson.HudsonJsonBuildStatusRepository" additivity="false">
+		<level value="error" />
+		<appender-ref ref="console" />
+	</logger>
 
 	<root>
 		<priority value="debug" />
 		<appender-ref ref="console" />
 	</root>
+	
+	
+	
 </log4j:configuration>

@@ -23,8 +23,8 @@ public class WorkWeekTurnOffCriteria implements
 	public static final int DEFAULT_WORK_WEEK_START_DAY = DateTimeConstants.MONDAY;
 	public static final int DEFAULT_WORK_WEEK_END_DAY = DateTimeConstants.FRIDAY;
 
-	private int startHourOfDay = DEFAULT_START_HOUR_OF_DAY;
-	private int endHourOfDay = DEFAULT_END_HOUR_OF_DAY;
+	private int workDayStartHour = DEFAULT_START_HOUR_OF_DAY;
+	private int workDayEndHour = DEFAULT_END_HOUR_OF_DAY;
 	private int workWeekStartDay = DEFAULT_WORK_WEEK_START_DAY;
 	private int workWeekEndDay = DEFAULT_WORK_WEEK_END_DAY;
 
@@ -32,16 +32,16 @@ public class WorkWeekTurnOffCriteria implements
 	 * @param endHourOfDay
 	 *            The hour a work-day ends.
 	 */
-	public void setEndHourOfDay(final int endHourOfDay) {
-		this.endHourOfDay = endHourOfDay;
+	public void setWorkDayEndHour(final int endHourOfDay) {
+		this.workDayEndHour = endHourOfDay;
 	}
 
 	/**
 	 * @param startHourOfDay
 	 *            The hour that a work-day starts.
 	 */
-	public void setStartHourOfDay(final int startHourOfDay) {
-		this.startHourOfDay = startHourOfDay;
+	public void setWorkDayStartHour(final int startHourOfDay) {
+		this.workDayStartHour = startHourOfDay;
 	}
 
 	/**
@@ -66,12 +66,13 @@ public class WorkWeekTurnOffCriteria implements
 	 * @see com.leohart.buildwhisperer.indicators.BuildStatusIndicatorTurnOffCriteria#shouldTurnOff()
 	 */
 	public boolean shouldTurnOff() {
-		log
-				.debug("Determining whether to turn indicator off based on work-week.");
+		log.debug("Determining whether to turn indicator off based on work-week.");
 
 		LocalDateTime now = new LocalDateTime();
+		
+		//LocalDateTime criteriaStart = new LocalDateTime().withWeekYear(now.getWeekyear())
 
-		if ((now.getHourOfDay() >= this.startHourOfDay && now.getHourOfDay() < this.endHourOfDay)
+		if ((now.getHourOfDay() >= this.workDayStartHour && now.getHourOfDay() < this.workDayEndHour)
 				&& (now.getDayOfWeek() >= this.workWeekStartDay && now
 						.getDayOfWeek() <= this.workWeekEndDay)) {
 
@@ -81,6 +82,14 @@ public class WorkWeekTurnOffCriteria implements
 
 		log.debug("Device should be turned off");
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return String
+				.format("WorkWeekTurnOffCriteria [workWeekStartsAt %s@%s and workWeekEndsAt %s@%s]",
+						this.workWeekStartDay, this.workDayStartHour,
+						this.workWeekEndDay, this.workDayEndHour);
 	}
 
 }

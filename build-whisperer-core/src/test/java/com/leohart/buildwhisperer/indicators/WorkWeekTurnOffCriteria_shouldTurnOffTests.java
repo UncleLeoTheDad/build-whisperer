@@ -2,6 +2,7 @@ package com.leohart.buildwhisperer.indicators;
 
 import org.joda.time.DateTimeUtils;
 import org.joda.time.LocalDateTime;
+import org.joda.time.PeriodType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,13 @@ import org.junit.Test;
 public class WorkWeekTurnOffCriteria_shouldTurnOffTests {
 
 	WorkWeekTurnOffCriteria criteria;
+	
+	private static final Integer MONDAY = 1;
+	private static final Integer FRIDAY = 5;
+	private static final Integer SEVEN_AM = 7;
+	private static final Integer SIX_AM = 6;
+	private static final Integer SEVEN_PM = 19;
+	private static final Integer FIFTY_NINE_MINUTES = 59;
 
 	@Before
 	public void setUp() throws Exception {
@@ -20,35 +28,42 @@ public class WorkWeekTurnOffCriteria_shouldTurnOffTests {
 
 	@Test
 	public void shouldNotTurnOffIfCurrentTimeIsDuringWorkingHours() {
-		LocalDateTime time = new LocalDateTime().withDayOfWeek(
-				WorkWeekTurnOffCriteria.DEFAULT_WORK_WEEK_START_DAY)
-				.withHourOfDay(
-						WorkWeekTurnOffCriteria.DEFAULT_START_HOUR_OF_DAY);
+		this.criteria.setWorkWeekStartDay(MONDAY);
+		this.criteria.setWorkWeekEndDay(FRIDAY);
+		this.criteria.setWorkDayStartHour(SEVEN_AM);
+		this.criteria.setWorkDayEndHour(SEVEN_PM);
+		
+		setCurrentTime(
+				new LocalDateTime().withDayOfWeek(MONDAY)
+									.withHourOfDay(SEVEN_AM)); //Just as work starts
 
-		DateTimeUtils.setCurrentMillisFixed(time.toDateTime().toInstant()
-				.getMillis());
-
+		
 		Assert.assertFalse(String.format(
-				"Should have been false for Day %s, Hour %s: ",
-				WorkWeekTurnOffCriteria.DEFAULT_WORK_WEEK_START_DAY,
-				WorkWeekTurnOffCriteria.DEFAULT_START_HOUR_OF_DAY),
+				"Should have been left on (false) for current time %s and criteria %s: ",
+				DateTimeUtils.getPeriodType(PeriodType.dayTime()), this.criteria),
 				this.criteria.shouldTurnOff());
+	}
+
+	private void setCurrentTime(LocalDateTime timeToSet) {
+		DateTimeUtils.setCurrentMillisFixed(timeToSet.toDateTime().toInstant()
+				.getMillis());
 	}
 
 	@Test
 	public void shouldTurnOffIfCurrentTimeIsOutsideWorkingHours() {
-		LocalDateTime time = new LocalDateTime().withDayOfWeek(
-				WorkWeekTurnOffCriteria.DEFAULT_WORK_WEEK_END_DAY)
-				.withHourOfDay(
-						WorkWeekTurnOffCriteria.DEFAULT_END_HOUR_OF_DAY);
-
-		DateTimeUtils.setCurrentMillisFixed(time.toDateTime().toInstant()
-				.getMillis());
+		this.criteria.setWorkWeekStartDay(MONDAY);
+		this.criteria.setWorkWeekEndDay(FRIDAY);
+		this.criteria.setWorkDayStartHour(SEVEN_AM);
+		this.criteria.setWorkDayEndHour(SEVEN_PM);
+		
+		setCurrentTime(
+				new LocalDateTime().withDayOfWeek(MONDAY)
+									.withHourOfDay(SIX_AM)
+									.withMinuteOfHour(FIFTY_NINE_MINUTES)); //Just before work starts
 
 		Assert.assertTrue(String.format(
-				"Should have been true for Day %s, Hour %s: ",
-				WorkWeekTurnOffCriteria.DEFAULT_WORK_WEEK_END_DAY,
-				WorkWeekTurnOffCriteria.DEFAULT_END_HOUR_OF_DAY),
+				"Should have been turned off (true) for current time %s and criteria %s: ",
+				DateTimeUtils.getPeriodType(PeriodType.dayTime()), this.criteria),
 				this.criteria.shouldTurnOff());
 	}
 
