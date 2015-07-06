@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+
+	<!-- StatusRepository -->
+	<bean id="buildStatusExtractor"
+		class="com.leohart.buildwhisperer.repositories.rss.TitlePartSyndEntryImplBuildStatusExtractor">
+		<constructor-arg index="0" value=" " />
+		<constructor-arg index="1" value="(SUCCESS)" />
+		<constructor-arg index="2" value="2" />
+	</bean>
+	
+	<bean id="devBuildStatusRepository"
+		class="com.leohart.buildwhisperer.repositories.rss.RssBuildStatusRepository">
+		<constructor-arg index="0"
+			value="http://cfesstbos1:18080/hudson/job/shares-dev-immediate/rssAll" />
+		<constructor-arg index="1" ref="buildStatusExtractor" />
+	</bean>
+
+	<bean id="devNextBuildStatusRepository"
+		class="com.leohart.buildwhisperer.repositories.rss.RssBuildStatusRepository">
+		<constructor-arg index="0"
+			value="http://cfesstbos1:18080/hudson/job/shares-dev-immediate-next-release/rssAll" />
+		<constructor-arg index="1" ref="buildStatusExtractor" />
+	</bean>
+	
+	<util:list id="repositories">
+		<ref bean="devBuildStatusRepository"/>
+		<ref bean="devNextBuildStatusRepository"/>    
+	</util:list>
+ 	
+	<bean id="buildStatusRepository"
+		class="com.leohart.buildwhisperer.repositories.CompositeBuildStatusRepository">
+		<constructor-arg index="0" ref="repositories"/>
+	</bean>
+
+	<!-- FeedbackDevice -->
+	<bean id="passDevice" class="com.pragauto.X10Device">
+		<constructor-arg index="0" value="COM1" />
+		<constructor-arg index="1" value="A1" />
+	</bean>
+
+	<bean id="failDevice" class="com.pragauto.X10Device">
+		<constructor-arg index="0" value="COM1" />
+		<constructor-arg index="1" value="A2" />
+	</bean>
+
+	<bean id="indicator"
+		class="com.leohart.buildwhisperer.indicators.cm17a.CM17ABuildStatusIndicator">
+		<constructor-arg index="0" ref="passDevice" />
+		<constructor-arg index="1" ref="failDevice" />
+	</bean>
+
+	<bean id="turnOffCriteria" class="com.leohart.buildwhisperer.indicators.WorkWeekTurnOffCriteria">
+		<property name="startHourOfDay" value="7" />
+		<property name="endHourOfDay" value="18" />
+		<property name="workWeekStartDay">
+			<util:constant static-field="org.joda.time.DateTimeConstants.MONDAY" />
+		</property>
+		<property name="workWeekEndDay">
+			<util:constant static-field="org.joda.time.DateTimeConstants.FRIDAY" />
+		</property>
+	</bean>
+
+	<bean id="partTimeIndicator" class="com.leohart.buildwhisperer.indicators.PartTimeDecorator">
+		<constructor-arg index="0" ref="indicator" />
+		<constructor-arg index="1" ref="turnOffCriteria" />
+	</bean>
+
+	<!-- Bridge -->
+	<bean id="buildStatusBridge" class="com.leohart.buildwhisperer.bridges.SimpleBuildStatusBridge"
+		lazy-init="true">		
+		<constructor-arg index="0" ref="partTimeIndicator" />
+		<constructor-arg index="1" ref="buildStatusRepository" />
+	</bean>
+
+</beans>
