@@ -11,8 +11,6 @@ import com.leohart.buildwhisperer.status.BuildStatus;
 /**
  * @author Leo Hart
  */
-
-///CLOVER:OFF Not worth testing
 public class BlinkyTapeBuildStatusIndicator implements
 		PoweredBuildStatusIndicator {
 
@@ -23,7 +21,7 @@ public class BlinkyTapeBuildStatusIndicator implements
 	 */
 	@Override
 	public void indicate(final BuildStatus status) {
-		this.log.info("Device was told to indicate status of " + status);
+		this.log.info("Not yet implemented, but device was told to indicate status of " + status);
 	}
 
 	/**
@@ -31,7 +29,7 @@ public class BlinkyTapeBuildStatusIndicator implements
 	 */
 	public void indicate(final BuildStatus[] statuses)
 			throws BuildStatusIndicatorException {
-		this.log.info("Device was told to indicate statuses of "
+		this.log.info("Not yet implemented, Device was told to indicate statuses of "
 				+ ArrayUtils.toString(statuses));
 	}
 
@@ -40,8 +38,7 @@ public class BlinkyTapeBuildStatusIndicator implements
 	 */
 	@Override
 	public void turnOff() {
-		this.log.info("Device was requested to turn off.");
+		this.log.info("Not yet implemented, Device was requested to turn off.");
 	}
 
 }
-///CLOVER:ON

@@ -11,8 +11,20 @@
 		</layout>
 	</appender>
 
+	<logger name="com.leohart.buildwhisperer.execution" additivity="false">
+		<priority value="info"/>
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="com.leohart.buildwhisperer.indicators" additivity="false">
+		<priority value="info"/>
+		<appender-ref ref="console" />
+	</logger>
+
+
 	<root>
-		<priority value="debug" />
+		<priority value="error" />
 		<appender-ref ref="console" />
 	</root>
+
 </log4j:configuration>

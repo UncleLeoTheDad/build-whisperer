@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:lang="http://www.springframework.org/schema/lang" 
 	xsi:schemaLocation="
-http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.1.xsd">
  	
 	<bean id="repository"
 		class="com.leohart.buildwhisperer.repositories.json.generic.RegexMatchingJsonBuildStatusRepository">
@@ -14,26 +17,10 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	<bean id="indicator"
 		class="com.leohart.buildwhisperer.indicators.logger.PoweredLogBuildStatusIndicator"/>
 
-	<bean id="turnOffCriteria" class="com.leohart.buildwhisperer.indicators.WorkWeekTurnOffCriteria">
-		<property name="startHourOfDay" value="7" />
-		<property name="endHourOfDay" value="18" />
-		<property name="workWeekStartDay">
-			<util:constant static-field="org.joda.time.DateTimeConstants.MONDAY" />
-		</property>
-		<property name="workWeekEndDay">
-			<util:constant static-field="org.joda.time.DateTimeConstants.FRIDAY" />
-		</property>
-	</bean>
-
-	<bean id="partTimeLogIndicator" class="com.leohart.buildwhisperer.indicators.PartTimeDecorator">
-		<constructor-arg name="indicator" ref="indicator" />
-		<constructor-arg name="turnOffCriteria" ref="turnOffCriteria" />
-	</bean>
-
 	<!-- Bridge -->
 	<bean id="buildStatusBridge" class="com.leohart.buildwhisperer.bridges.SimpleBuildStatusBridge"
 		lazy-init="true">		
-		<constructor-arg name="indicator" ref="partTimeLogIndicator" />
+		<constructor-arg name="indicator" ref="indicator" />
 		<constructor-arg name="repository" ref="repository" />
 	</bean>
 

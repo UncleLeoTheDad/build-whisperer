@@ -1,1 +1,0 @@
-java -DrepeatInterval=120 -Dlog4j.debug=true -Dlog4j.configuration="file:../log4j.xml" -jar ../../../target/build-whisperer-client-jar-with-dependencies.jar "bridgeContext-rssToBlinkyTape.xml"

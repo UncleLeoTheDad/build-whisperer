@@ -1,34 +1,40 @@
-
-description = 'build-whisperer-client'
-dependencies {
-    compile libraries."commons-lang"
-    compile libraries."commons-logging"
-    compile libraries."spring-context"
-    compile libraries."spring-core"
-    compile project(':build-whisperer-core')
-    runtime libraries."log4j"
-    runtime project(':build-whisperer-adapters')
-    testCompile libraries."easymock"
-    testCompile libraries."easymockclassextension"
-    testCompile libraries."junit"
+plugins {
+	id 'groovy'
+	id 'com.github.johnrengelman.shadow' version '1.2.1'
 }
 
-task uberJar(type: Jar, dependsOn: subprojects.assemble) {
-	description = 'Creates Uberjar.'
+description = 'build-whisperer-client'
 
-	baseName = project.name + '-all'
+dependencies {
+	compile libraries."commons-lang"
+	compile libraries."commons-logging"
+	compile libraries."spring-context"
+	compile libraries."spring-core"
+	compile project(':build-whisperer-core')
+	runtime libraries."log4j"
+	runtime project(':build-whisperer-adapters')
+	testCompile libraries."easymock"
+	testCompile libraries."easymockclassextension"
+	testCompile libraries."junit"
+}
 
+mainClassName = "com.leohart.buildwhisperer.execution.BuildStatusBridgeRunner"
+
+jar {
 	manifest {
-		attributes 	'Implementation-Title': project.name,
-		'Implementation-Version': project.version,
-		'Main-Class': 'com.leohart.buildwhisperer.execution.BuildStatusBridgeRunner'
+		attributes( 'Implementation-Title': project.name,
+					'Implementation-Version': project.version,
+					'Main-Class': 'com.leohart.buildwhisperer.execution.BuildStatusBridgeRunner')
+	}
+}
+
+shadowJar {
+	manifest {
+		attributes( 'Implementation-Title': project.name,
+					'Implementation-Version': project.version,
+					'Main-Class': 'com.leohart.buildwhisperer.execution.BuildStatusBridgeRunner')
 	}
 	
-	//println configurations.compile
-	
-	from { 
-		println "includeInJar: " + configurations.compile.collect { File file -> file }
-		configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } 
-	}
-	with jar
+	mergeServiceFiles('META-INF/spring.handlers')
+	mergeServiceFiles('META-INF/spring.schemas')
 }

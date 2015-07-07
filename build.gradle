@@ -1,39 +1,6 @@
-
-allprojects  {
-	apply plugin: 'application'
-	apply plugin: 'maven'
-	apply plugin: "jacoco"
-	apply plugin: "eclipse"
-	apply plugin: "groovy"
-
-	group = 'com.leohart'
-	version = '1.5.0-SNAPSHOT'
-}
-
-subprojects {
-	apply plugin: 'java'
-	sourceCompatibility = 1.8
-	targetCompatibility = 1.8
-
-	repositories {
-		mavenLocal()
-		mavenCentral()
-
-		maven { url "https://repository.jboss.org/nexus/" }
-		maven { url "http://download.java.net/maven/2/" }
-		maven { url "http://repo.maven.apache.org/maven2" }
-	}
-}
-
-allprojects {
-	task listJars << { task ->
-		println "$task.project.name dependencies:"
-		configurations.compile.each { File file -> println "\t" + file.name }
-	}
-}
-
 //All libraries and versions are configured here and reused in subprojects to minimize conflicts
 ext.libraries = [
+	"asm-all": "asm:asm-all:3.3.1",
 	"comm": "javax.comm:comm:2.0.3",
 	"commons-httpclient": "commons-httpclient:commons-httpclient:3.1",
 	"commons-lang": "commons-lang:commons-lang:2.4",
@@ -56,3 +23,50 @@ ext.libraries = [
 	"spring-context": "org.springframework:spring-context:2.5.6",
 	"spring-core": "org.springframework:spring-core:2.5.6"
 ]
+
+allprojects  {
+	apply plugin: 'application'
+	apply plugin: 'maven'
+	apply plugin: "jacoco"
+	apply plugin: "eclipse"
+	apply plugin: "groovy"	
+
+	group = 'com.leohart'
+	version = '1.5.0-SNAPSHOT'
+}
+
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url 'http://dl.bintray.com/content/johnrengelman/gradle-plugins' }
+	}
+	
+	dependencies {
+		classpath 'org.gradle.plugins:shadow:0.7.4'
+	}
+}
+
+subprojects {
+	apply plugin: 'java'
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+
+	repositories {
+		mavenLocal()
+		mavenCentral()
+
+		maven { url "https://repository.jboss.org/nexus/" }
+		maven { url "http://download.java.net/maven/2/" }
+		maven { url "http://repo.maven.apache.org/maven2" }
+		maven { url 'http://dl.bintray.com/content/johnrengelman/gradle-plugins' }
+	}
+}
+
+allprojects {
+	task listJars << { task ->
+		println "$task.project.name dependencies:"
+		configurations.compile.each { File file -> println "\t" + file.name }
+	}
+}
+

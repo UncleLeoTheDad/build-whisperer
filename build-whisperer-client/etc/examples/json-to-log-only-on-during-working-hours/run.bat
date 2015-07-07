@@ -1,1 +1,0 @@
-"C:\Program Files\Java\jdk1.5.0_14\jre\bin\java.exe" -DrepeatInterval=120 -Dlog4j.debug=true -Dlog4j.configuration="file:../log4j.xml" -jar ../../../target/build-whisperer-client-jar-with-dependencies.jar "bridgeContext-rsstolava.xml"

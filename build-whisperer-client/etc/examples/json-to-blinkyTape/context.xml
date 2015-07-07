@@ -2,54 +2,24 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:lang="http://www.springframework.org/schema/lang" 
 	xsi:schemaLocation="
-http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.1.xsd">
 
-	<!-- StatusRepository -->
-	<bean id="buildStatusExtractor"
-		class="com.leohart.buildwhisperer.repositories.rss.RssEntryTitleAnalyzingBuildStatusExtractor">
-		<constructor-arg index="0" value=" " />
-		<constructor-arg index="1" value="(SUCCESS)" />
-		<constructor-arg index="2" value="2" />
-	</bean>
-	
-	<bean id="devBuildStatusRepository"
-		class="com.leohart.buildwhisperer.repositories.rss.RssBuildStatusRepository">
-		<constructor-arg index="0"
-			value="https://hartl:W!ggles@meshbuild.pega.com/bamboo/rss/createAllBuildsRssFeed.action?feedType=rssAll%26buildKey=PRPCHEADCV-CF%26os_authType=basic" />
-		<constructor-arg index="1" ref="buildStatusExtractor" />
-	</bean>
-	
-	<util:list id="repositories">
-		<ref bean="devBuildStatusRepository"/>    
-	</util:list>
- 	
-	<bean id="buildStatusRepository"
-		class="com.leohart.buildwhisperer.repositories.CompositeBuildStatusRepository">
-		<constructor-arg index="0" ref="repositories"/>
-	</bean>
-
-	<!-- FeedbackDevice -->
-	<bean id="passDevice" class="com.pragauto.X10Device">
-		<constructor-arg index="0" value="COM1" />
-		<constructor-arg index="1" value="A1" />
-	</bean>
-
-	<bean id="failDevice" class="com.pragauto.X10Device">
-		<constructor-arg index="0" value="COM1" />
-		<constructor-arg index="1" value="A2" />
+	<bean id="repository"
+		class="com.leohart.buildwhisperer.repositories.json.generic.RegexMatchingJsonBuildStatusRepository">
+		<constructor-arg name="jsonURL" value="https://ci.jenkins-ci.org/job/core_selenium-test/lastBuild/api/json?tree=result" />
+		<constructor-arg name="successRegEx" value=".*SUCCESS.*" />
 	</bean>
 
 	<bean id="indicator"
-		class="com.leohart.buildwhisperer.indicators.cm17a.CM17ABuildStatusIndicator">
-		<constructor-arg index="0" ref="passDevice" />
-		<constructor-arg index="1" ref="failDevice" />
-	</bean>
+		class="com.leohart.buildwhisperer.indicators.blinkytape.BlinkyTapeBuildStatusIndicator"/>
 
 	<bean id="turnOffCriteria" class="com.leohart.buildwhisperer.indicators.WorkWeekTurnOffCriteria">
-		<property name="startHourOfDay" value="7" />
-		<property name="endHourOfDay" value="18" />
+		<property name="workDayStartHour" value="7" />
+		<property name="workDayEndHour" value="19" />
 		<property name="workWeekStartDay">
 			<util:constant static-field="org.joda.time.DateTimeConstants.MONDAY" />
 		</property>
@@ -67,7 +37,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	<bean id="buildStatusBridge" class="com.leohart.buildwhisperer.bridges.SimpleBuildStatusBridge"
 		lazy-init="true">		
 		<constructor-arg index="0" ref="partTimeIndicator" />
-		<constructor-arg index="1" ref="buildStatusRepository" />
+		<constructor-arg index="1" ref="repository" />
 	</bean>
 
 </beans>
