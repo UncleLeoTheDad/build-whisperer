@@ -29,10 +29,28 @@ allprojects  {
 	apply plugin: 'maven'
 	apply plugin: "jacoco"
 	apply plugin: "eclipse"
+	apply plugin: "java"
 	apply plugin: "groovy"	
 
 	group = 'com.leohart'
 	version = '1.5.0-SNAPSHOT'
+	
+	repositories {		
+		mavenLocal()
+		mavenCentral()
+
+		maven { url "https://repository.jboss.org/nexus/" }
+		maven { url "http://download.java.net/maven/2/" }
+		maven { url "http://repo.maven.apache.org/maven2" }
+		maven { url 'http://dl.bintray.com/content/johnrengelman/gradle-plugins' }
+		
+		jcenter()
+	}
+	
+	
+	jacoco {
+        toolVersion = '0.7.1.201405082137'
+    }
 }
 
 buildscript {
@@ -48,18 +66,19 @@ buildscript {
 }
 
 subprojects {
-	apply plugin: 'java'
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
 
-	repositories {
-		mavenLocal()
-		mavenCentral()
-
-		maven { url "https://repository.jboss.org/nexus/" }
-		maven { url "http://download.java.net/maven/2/" }
-		maven { url "http://repo.maven.apache.org/maven2" }
-		maven { url 'http://dl.bintray.com/content/johnrengelman/gradle-plugins' }
+	
+	jacocoTestReport {
+		additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
+		sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+		classDirectories =  files(sourceSets.main.output)
+		reports {
+			html.enabled = true
+			xml.enabled = true
+			csv.enabled = false
+		}
 	}
 }
 
@@ -68,5 +87,26 @@ allprojects {
 		println "$task.project.name dependencies:"
 		configurations.compile.each { File file -> println "\t" + file.name }
 	}
+}
+
+task jacocoAggregateReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+    dependsOn = subprojects.test
+    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
+    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories = files(subprojects.sourceSets.main.output)
+    executionData = files(subprojects.jacocoTestReport.executionData)
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
+    }
+    onlyIf = {
+        true
+    }
+    doFirst {
+        executionData = files(executionData.findAll {
+            it.exists()
+        })
+    }
 }
 

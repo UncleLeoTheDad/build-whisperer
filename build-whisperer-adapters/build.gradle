@@ -1,11 +1,6 @@
 
 description = 'build-whisperer-adapters'
 
-//sourceSets.main.java.srcDirs = []
-//sourceSets.main.groovy.srcDirs += ["src/main/java"]
-//sourceSets.test.java.srcDirs = []
-//sourceSets.test.groovy.srcDirs += ["src/main/java"]
-
 dependencies {
     compile libraries."comm"
     compile libraries."commons-httpclient"
