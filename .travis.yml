@@ -2,8 +2,11 @@ language: groovy
 jdk:
   - oraclejdk8
 
+notifications:
+  email: false
+
 before_install:
-  - cd /build-whisperer-core/lib/ 
+  - cd ./build-whisperer-core/lib/ 
   - sh install.sh
   - cd ../..
 after_success:
