@@ -3,7 +3,6 @@ jdk:
   - oraclejdk8
 
 before_install:
-  - pwd
   - ./build-whisperer-core/lib/install.sh
 after_success:
   - bash <(curl -s https://codecov.io/bash)
