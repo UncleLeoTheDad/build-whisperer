@@ -8,6 +8,8 @@ target-eclipse
 .classpath
 .project
 .settings/
+.class
+*.class
 
 #gradle
 .gradle/
@@ -16,3 +18,4 @@ gradlew.bat
 gradle/
 build/
 /bin/
+bin/
