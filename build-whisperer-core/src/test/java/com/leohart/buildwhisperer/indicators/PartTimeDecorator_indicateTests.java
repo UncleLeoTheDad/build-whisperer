@@ -23,6 +23,7 @@ public class PartTimeDecorator_indicateTests {
 			this.shouldTurnOff = shouldTurnOff;
 		}
 
+		@Override
 		public boolean shouldTurnOff() {
 			return this.shouldTurnOff;
 		}
@@ -39,10 +40,12 @@ public class PartTimeDecorator_indicateTests {
 			return this.storeLastIndicatedIndicator.getLastStatusIndicated();
 		}
 
+		@Override
 		public void indicate(final BuildStatus status) {
 			this.storeLastIndicatedIndicator.indicate(status);
 		}
 
+		@Override
 		public void turnOff() throws BuildStatusIndicatorException {
 			this.wasTurnedOff = true;
 		}

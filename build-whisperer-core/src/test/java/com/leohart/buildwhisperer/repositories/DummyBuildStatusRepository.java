@@ -17,6 +17,7 @@ public class DummyBuildStatusRepository implements
 		this.buildStatus = buildStatus;
 	}
 
+	@Override
 	public BuildStatus getBuildStatus() throws BuildStatusRepositoryException {
 		return this.buildStatus;
 	}

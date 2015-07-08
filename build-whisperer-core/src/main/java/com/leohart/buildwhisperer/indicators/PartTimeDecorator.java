@@ -18,6 +18,7 @@ public class PartTimeDecorator extends PoweredBuildStatusIndicatorDecorator {
 		this.turnOffCriteria = turnOffCriteria;
 	}
 
+	@Override
 	public void indicate(final BuildStatus status) {
 		if (!this.wasTurnedOff()) {
 			this.indicator.indicate(status);
@@ -27,6 +28,7 @@ public class PartTimeDecorator extends PoweredBuildStatusIndicatorDecorator {
 	/**
 	 * @see com.leohart.buildwhisperer.indicators.PoweredBuildStatusIndicator#turnOff()
 	 */
+	@Override
 	public void turnOff() {
 		this.indicator.turnOff();
 	}

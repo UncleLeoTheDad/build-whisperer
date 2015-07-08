@@ -15,7 +15,7 @@ import org.joda.time.LocalDateTime;
 public class WorkWeekTurnOffCriteria implements
 		BuildStatusIndicatorTurnOffCriteria {
 
-	private static final Log log = LogFactory
+	private static final Log LOG = LogFactory
 			.getLog(WorkWeekTurnOffCriteria.class);
 
 	public static final int DEFAULT_START_HOUR_OF_DAY = 7;
@@ -65,8 +65,9 @@ public class WorkWeekTurnOffCriteria implements
 	/**
 	 * @see com.leohart.buildwhisperer.indicators.BuildStatusIndicatorTurnOffCriteria#shouldTurnOff()
 	 */
+	@Override
 	public boolean shouldTurnOff() {
-		log.debug("Determining whether to turn indicator off based on work-week.");
+		LOG.debug("Determining whether to turn indicator off based on work-week.");
 
 		LocalDateTime now = new LocalDateTime();
 		
@@ -76,11 +77,11 @@ public class WorkWeekTurnOffCriteria implements
 				&& (now.getDayOfWeek() >= this.workWeekStartDay && now
 						.getDayOfWeek() <= this.workWeekEndDay)) {
 
-			log.debug("Device should not be turned off");
+			LOG.debug("Device should not be turned off");
 			return false;
 		}
 
-		log.debug("Device should be turned off");
+		LOG.debug("Device should be turned off");
 		return true;
 	}
 

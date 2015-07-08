@@ -23,6 +23,7 @@ public class SimpleBuildStatusBridge_bridgeBuildStatusTests {
 			this.buildStatusToReturn = buildStatusToReturn;
 		}
 
+		@Override
 		public BuildStatus getBuildStatus() {
 			return this.buildStatusToReturn;
 		}

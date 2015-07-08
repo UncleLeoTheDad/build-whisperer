@@ -33,6 +33,7 @@ public class CM17ABuildStatusIndicator implements PoweredBuildStatusIndicator {
 	/**
 	 * @see com.com.leohart.buildwhisperer.indicator.BuildStatusIndicator#indicate(com.com.leohart.buildwhisperer.buildstatus.BuildStatus)
 	 */
+	@Override
 	public void indicate(final BuildStatus status)
 			throws BuildStatusIndicatorException {
 		CM17ABuildStatusIndicator.log.info("Indicating BuildStatus of "
@@ -76,6 +77,7 @@ public class CM17ABuildStatusIndicator implements PoweredBuildStatusIndicator {
 	/**
 	 * @see com.com.leohart.buildwhisperer.indicator.BuildStatusIndicator#shouldTurnOff()
 	 */
+	@Override
 	public void turnOff() throws BuildStatusIndicatorException {
 		CM17ABuildStatusIndicator.log.info("Turning off");
 		try {

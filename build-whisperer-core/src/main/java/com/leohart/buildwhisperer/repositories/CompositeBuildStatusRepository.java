@@ -26,7 +26,8 @@ public class CompositeBuildStatusRepository implements
 		this.childRepositories.add(repository);
 	}
 
-	public BuildStatus getBuildStatus() throws BuildStatusRepositoryException {
+	@Override
+	public BuildStatus getBuildStatus() {
 		CompositeBuildStatus buildStatus = new CompositeBuildStatus();
 
 		for (BuildStatusRepository<BuildStatus> repository : this.childRepositories) {

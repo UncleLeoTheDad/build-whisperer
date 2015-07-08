@@ -12,6 +12,7 @@ public class StoreLastIndicatedBuildStatusIndicator implements
 		return this.lastStatusIndicated;
 	}
 
+	@Override
 	public void indicate(final BuildStatus status) {
 		this.lastStatusIndicated = status;
 	}

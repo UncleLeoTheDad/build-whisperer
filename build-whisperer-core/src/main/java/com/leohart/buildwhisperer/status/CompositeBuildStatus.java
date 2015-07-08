@@ -19,6 +19,7 @@ public class CompositeBuildStatus implements BuildStatus {
 	 * @see com.leohart.buildwhisperer.status.BuildStatus#isSuccessful() Only
 	 *      returns successful if all child statuses are successful
 	 */
+	@Override
 	public boolean isSuccessful() {
 		for (BuildStatus status : this.childStatuses) {
 			if (!status.isSuccessful()) {

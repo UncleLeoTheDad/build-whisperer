@@ -30,7 +30,7 @@ allprojects  {
 	apply plugin: "jacoco"
 	apply plugin: "eclipse"
 	apply plugin: "java"
-	apply plugin: "groovy"	
+	apply plugin: "groovy"
 
 	group = 'com.leohart'
 	version = '1.5.0-SNAPSHOT'
@@ -51,17 +51,10 @@ allprojects  {
 	jacoco {
         toolVersion = '0.7.1.201405082137'
     }
-}
-
-buildscript {
-	repositories {
-		mavenLocal()
-		mavenCentral()
-		maven { url 'http://dl.bintray.com/content/johnrengelman/gradle-plugins' }
-	}
 	
-	dependencies {
-		classpath 'org.gradle.plugins:shadow:0.7.4'
+	task listJars << { task ->
+		println "$task.project.name dependencies:"
+		configurations.compile.each { File file -> println "\t" + file.name }
 	}
 }
 
@@ -82,10 +75,17 @@ subprojects {
 	}
 }
 
-allprojects {
-	task listJars << { task ->
-		println "$task.project.name dependencies:"
-		configurations.compile.each { File file -> println "\t" + file.name }
+apply plugin: "sonar-runner"
+
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url 'http://dl.bintray.com/content/johnrengelman/gradle-plugins' }
+	}
+	
+	dependencies {
+		classpath 'org.gradle.plugins:shadow:0.7.4'
 	}
 }
 

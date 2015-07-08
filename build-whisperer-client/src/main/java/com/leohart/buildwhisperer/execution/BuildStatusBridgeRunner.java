@@ -18,20 +18,24 @@ public class BuildStatusBridgeRunner {
 	private static final String BRIDGE_BEAN_NAME = "buildStatusBridge";
 	private static final String REPEAT_INTERVAL_PARAM = "repeatInterval";
 
-	private static Log log = LogFactory.getLog(BuildStatusBridgeRunner.class);
+	private static final Log LOG = LogFactory.getLog(BuildStatusBridgeRunner.class);
 
 	private static BuildStatusBridge buildStatusBridge;
+
+	private BuildStatusBridgeRunner() {
+		super();
+	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(final String[] args) {
 		try {
-			log.debug("Arguments passed in were: " + ArrayUtils.toString(args));
+			LOG.debug("Arguments passed in were: " + ArrayUtils.toString(args));
 
 			BuildStatusBridgeRunner.initializeContext(args);
 
-			log.info("Bridging build status.");
+			LOG.info("Bridging build status.");
 
 			Integer repeatInterval = BuildStatusBridgeRunner
 					.getRepeatInterval();
@@ -40,54 +44,54 @@ public class BuildStatusBridgeRunner {
 				buildStatusBridge.bridgeBuildStatus();
 			}
 			else {
-				log.info("Putting runner on repeat.");
+				LOG.info("Putting runner on repeat.");
 				while (true) {
 					buildStatusBridge.bridgeBuildStatus();
 
-					log.info(String
+					LOG.info(String
 							.format("Waiting %s seconds", repeatInterval));
-					Thread.sleep(repeatInterval * 1000);
+					Thread.sleep(repeatInterval * 1000L);
 				}
 			}
 		}
 		catch (Exception e) {
-			log.error("An unexpected exception occured which running: ", e);
+			LOG.error("An unexpected exception occured which running: ", e);
 		}
 	}
 
 	private static ApplicationContext getContext(final String[] args) {
 		if (args.length <= 0) {
-			log
+			LOG
 					.info("No external config was specified.  Using default on classpath: "
 							+ APP_CONTEXT);
 
 			return new ClassPathXmlApplicationContext(APP_CONTEXT);
 		}
 
-		log.info("Using external config specified at: " + args[0]);
+		LOG.info("Using external config specified at: " + args[0]);
 
 		return new FileSystemXmlApplicationContext(args[0]);
 	}
 
 	private static Integer getRepeatInterval() {
-		log.debug("Determining whether repeat interval was specified.");
+		LOG.debug("Determining whether repeat interval was specified.");
 		String repeatInterval = System.getProperty(REPEAT_INTERVAL_PARAM);
 
 		if (repeatInterval == null) {
-			log.debug("No repeat interval specified.");
+			LOG.debug("No repeat interval specified.");
 			return null;
 		}
-		log.debug(String.format("Repeat interval of %s seconds was specified.",
+		LOG.debug(String.format("Repeat interval of %s seconds was specified.",
 				repeatInterval));
 
 		return Integer.parseInt(repeatInterval);
 	}
 
 	private static void initializeContext(final String[] args) {
-		log.info("Loading application context.");
+		LOG.info("Loading application context.");
 		ApplicationContext context = BuildStatusBridgeRunner.getContext(args);
 
-		log.debug("Getting bridge bean");
+		LOG.debug("Getting bridge bean");
 		buildStatusBridge = (BuildStatusBridge) context
 				.getBean(BRIDGE_BEAN_NAME);
 	}

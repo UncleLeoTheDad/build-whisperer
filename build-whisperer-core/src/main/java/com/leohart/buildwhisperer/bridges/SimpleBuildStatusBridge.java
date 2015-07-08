@@ -12,7 +12,7 @@ import com.leohart.buildwhisperer.status.BuildStatus;
  */
 public class SimpleBuildStatusBridge implements BuildStatusBridge {
 
-	private static final Log log = LogFactory
+	private static final Log LOG = LogFactory
 			.getLog(SimpleBuildStatusBridge.class);
 
 	protected BuildStatusRepository<BuildStatus> repository;
@@ -26,10 +26,10 @@ public class SimpleBuildStatusBridge implements BuildStatusBridge {
 
 	@Override
 	public void bridgeBuildStatus() {
-		SimpleBuildStatusBridge.log.info("Getting build status.");
+		SimpleBuildStatusBridge.LOG.info("Getting build status.");
 		BuildStatus status = this.repository.getBuildStatus();
 
-		SimpleBuildStatusBridge.log
+		SimpleBuildStatusBridge.LOG
 				.info("Instructing feedback indicator to indicate status.");
 		this.indicator.indicate(status);
 	}

@@ -5,6 +5,6 @@ package com.leohart.buildwhisperer.indicators;
  */
 public interface PoweredBuildStatusIndicator extends BuildStatusIndicator {
 
-	void turnOff() throws BuildStatusIndicatorException;
+	void turnOff();
 
 }

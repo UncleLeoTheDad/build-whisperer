@@ -9,6 +9,7 @@ public class SimpleBuildStatus implements BuildStatus {
 		this.successful = successful;
 	}
 
+	@Override
 	public boolean isSuccessful() {
 		return this.successful;
 	}

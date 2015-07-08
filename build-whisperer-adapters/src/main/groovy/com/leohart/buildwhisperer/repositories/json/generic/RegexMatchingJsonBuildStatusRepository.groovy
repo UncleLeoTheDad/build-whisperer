@@ -40,8 +40,6 @@ class RegexMatchingJsonBuildStatusRepository implements BuildStatusRepository<Bu
 
 	@Override
 	public BuildStatus getBuildStatus() {
-		RESTClient rest = new RESTClient("");
-
 		def json = this.jsonRetriever.retrieve(jsonURL);
 
 		Matcher matcher = json =~ /${successRegEx}/
