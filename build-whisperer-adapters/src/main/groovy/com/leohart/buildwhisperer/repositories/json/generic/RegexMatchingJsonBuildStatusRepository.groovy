@@ -1,7 +1,5 @@
 package com.leohart.buildwhisperer.repositories.json.generic
 
-import groovyx.net.http.RESTClient
-
 import java.util.regex.Matcher
 
 import com.leohart.buildwhisperer.repositories.BuildStatusRepository

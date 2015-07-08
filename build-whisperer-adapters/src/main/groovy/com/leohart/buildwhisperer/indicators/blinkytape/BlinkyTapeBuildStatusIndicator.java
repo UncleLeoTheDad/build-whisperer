@@ -4,7 +4,6 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.leohart.buildwhisperer.indicators.BuildStatusIndicatorException;
 import com.leohart.buildwhisperer.indicators.PoweredBuildStatusIndicator;
 import com.leohart.buildwhisperer.status.BuildStatus;
 
@@ -21,14 +20,14 @@ public class BlinkyTapeBuildStatusIndicator implements
 	 */
 	@Override
 	public void indicate(final BuildStatus status) {
-		this.LOG.info("Not yet implemented, but device was told to indicate status of " + status);
+		LOG.info("Not yet implemented, but device was told to indicate status of " + status);
 	}
 
 	/**
 	 * @see com.leohart.buildwhisperer.indicators.BuildStatusIndicator#indicate(com.leohart.buildwhisperer.status.BuildStatus[])
 	 */
 	public void indicate(final BuildStatus[] statuses) {
-		this.LOG.info("Not yet implemented, Device was told to indicate statuses of "
+		LOG.info("Not yet implemented, Device was told to indicate statuses of "
 				+ ArrayUtils.toString(statuses));
 	}
 
@@ -37,7 +36,7 @@ public class BlinkyTapeBuildStatusIndicator implements
 	 */
 	@Override
 	public void turnOff() {
-		this.LOG.info("Not yet implemented, Device was requested to turn off.");
+		LOG.info("Not yet implemented, Device was requested to turn off.");
 	}
 
 }

@@ -14,7 +14,7 @@ import com.pragauto.X10Device;
  */
 public class CM17ABuildStatusIndicator implements PoweredBuildStatusIndicator {
 
-	private static Log log = LogFactory.getLog(CM17ABuildStatusIndicator.class);
+	private static final Log LOG = LogFactory.getLog(CM17ABuildStatusIndicator.class);
 
 	private final X10Device passDevice;
 	private final X10Device failDevice;
@@ -34,9 +34,8 @@ public class CM17ABuildStatusIndicator implements PoweredBuildStatusIndicator {
 	 * @see com.com.leohart.buildwhisperer.indicator.BuildStatusIndicator#indicate(com.com.leohart.buildwhisperer.buildstatus.BuildStatus)
 	 */
 	@Override
-	public void indicate(final BuildStatus status)
-			throws BuildStatusIndicatorException {
-		CM17ABuildStatusIndicator.log.info("Indicating BuildStatus of "
+	public void indicate(final BuildStatus status) {
+		CM17ABuildStatusIndicator.LOG.info("Indicating BuildStatus of "
 				+ status.toString());
 
 		try {
@@ -63,8 +62,7 @@ public class CM17ABuildStatusIndicator implements PoweredBuildStatusIndicator {
 	 * 
 	 * @see com.leohart.buildwhisperer.indicators.BuildStatusIndicator#indicate(com.leohart.buildwhisperer.status.BuildStatus[])
 	 */
-	public void indicate(final BuildStatus[] statuses)
-			throws BuildStatusIndicatorException {
+	public void indicate(final BuildStatus[] statuses) {
 		for (BuildStatus status : statuses) {
 			if (!status.isSuccessful()) {
 				this.indicate(new SimpleBuildStatus(false));
@@ -78,8 +76,8 @@ public class CM17ABuildStatusIndicator implements PoweredBuildStatusIndicator {
 	 * @see com.com.leohart.buildwhisperer.indicator.BuildStatusIndicator#shouldTurnOff()
 	 */
 	@Override
-	public void turnOff() throws BuildStatusIndicatorException {
-		CM17ABuildStatusIndicator.log.info("Turning off");
+	public void turnOff() {
+		CM17ABuildStatusIndicator.LOG.info("Turning off");
 		try {
 			this.passDevice.off();
 			this.failDevice.off();
