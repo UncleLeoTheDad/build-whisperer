@@ -3,6 +3,7 @@ package com.leohart.buildwhisperer.indicators;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.joda.time.DateTimeConstants;
+import org.joda.time.Interval;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -71,17 +72,28 @@ public class WorkWeekTurnOffCriteria implements
 
 		LocalDateTime now = new LocalDateTime();
 		
-		//LocalDateTime criteriaStart = new LocalDateTime().withWeekYear(now.getWeekyear())
+		LocalDateTime workWeekStart = now.withDayOfWeek(workWeekStartDay)
+										 .withHourOfDay(workDayStartHour)
+										 .withMinuteOfHour(0)
+										 .withSecondOfMinute(0)
+										 .withMillisOfSecond(0);
+		
+		LocalDateTime workWeekEnd = now.withDayOfWeek(workWeekEndDay)
+									   .withHourOfDay(workDayEndHour)
+									   .withMinuteOfHour(0)
+									   .withSecondOfMinute(0)
+									   .withMillisOfSecond(0);
+		
+		Interval workWeek = new Interval(workWeekStart.toDateTime(), workWeekEnd.toDateTime());
+		LOG.info("Workweek: " + workWeek);		
+		
+		if (workWeek.contains(now.toDateTime())) {
 
-		if ((now.getHourOfDay() >= this.workDayStartHour && now.getHourOfDay() < this.workDayEndHour)
-				&& (now.getDayOfWeek() >= this.workWeekStartDay && now
-						.getDayOfWeek() <= this.workWeekEndDay)) {
-
-			LOG.debug("Device should not be turned off");
+			LOG.info("Device should not be turned off @" + now);
 			return false;
 		}
 
-		LOG.debug("Device should be turned off");
+		LOG.info("Device should be turned off @" +  now);
 		return true;
 	}
 

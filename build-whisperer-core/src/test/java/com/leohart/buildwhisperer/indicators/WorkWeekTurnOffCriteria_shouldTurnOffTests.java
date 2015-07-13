@@ -20,6 +20,7 @@ public class WorkWeekTurnOffCriteria_shouldTurnOffTests {
 	private static final Integer SIX_AM = 6;
 	private static final Integer SEVEN_PM = 19;
 	private static final Integer FIFTY_NINE_MINUTES = 59;
+	private static final Integer ONE_MINUTE = 1;
 
 	@Before
 	public void setUp() throws Exception {
@@ -35,8 +36,10 @@ public class WorkWeekTurnOffCriteria_shouldTurnOffTests {
 		
 		setCurrentTime(
 				new LocalDateTime().withDayOfWeek(MONDAY)
-									.withHourOfDay(SEVEN_AM)); //Just as work starts
-
+									.withHourOfDay(SEVEN_AM) //Just as work starts
+									.withMinuteOfHour(0)
+									.withSecondOfMinute(0)
+									.withMillisOfSecond(0));
 		
 		Assert.assertFalse(String.format(
 				"Should have been left on (false) for current time %s and criteria %s: ",
@@ -59,7 +62,21 @@ public class WorkWeekTurnOffCriteria_shouldTurnOffTests {
 		setCurrentTime(
 				new LocalDateTime().withDayOfWeek(MONDAY)
 									.withHourOfDay(SIX_AM)
-									.withMinuteOfHour(FIFTY_NINE_MINUTES)); //Just before work starts
+									.withMinuteOfHour(FIFTY_NINE_MINUTES)
+									.withSecondOfMinute(0)
+									.withMillisOfSecond(0)); //Just before work starts
+
+		Assert.assertTrue(String.format(
+				"Should have been turned off (true) for current time %s and criteria %s: ",
+				DateTimeUtils.getPeriodType(PeriodType.dayTime()), this.criteria),
+				this.criteria.shouldTurnOff());
+		
+		setCurrentTime(
+				new LocalDateTime().withDayOfWeek(FRIDAY)
+									.withHourOfDay(SEVEN_PM)
+									.withMinuteOfHour(ONE_MINUTE)
+									.withSecondOfMinute(0)
+									.withMillisOfSecond(0)); //Just before work starts
 
 		Assert.assertTrue(String.format(
 				"Should have been turned off (true) for current time %s and criteria %s: ",
