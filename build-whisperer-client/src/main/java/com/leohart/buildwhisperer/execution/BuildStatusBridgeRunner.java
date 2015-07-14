@@ -21,6 +21,10 @@ public class BuildStatusBridgeRunner {
 	private static final Log LOG = LogFactory.getLog(BuildStatusBridgeRunner.class);
 
 	private static BuildStatusBridge buildStatusBridge;
+	
+	private BuildStatusBridgeRunner() {
+		super();
+	}
 
 	/**
 	 * @param args
@@ -83,10 +87,6 @@ public class BuildStatusBridgeRunner {
 
 		LOG.debug("Getting bridge bean");
 		buildStatusBridge = (BuildStatusBridge) context.getBean(BRIDGE_BEAN_NAME);
-	}
-
-	private BuildStatusBridgeRunner() {
-		super();
 	}
 
 }
