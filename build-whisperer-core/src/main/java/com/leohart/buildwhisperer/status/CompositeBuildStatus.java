@@ -5,9 +5,9 @@ import java.util.List;
 
 public class CompositeBuildStatus implements BuildStatus {
 
-	private final List<BuildStatus> childStatuses = new ArrayList<BuildStatus>();
+	private List<BuildStatus> childStatuses = new ArrayList<BuildStatus>();
 
-	public void addBuildStatus(final BuildStatus buildStatus) {
+	public void addBuildStatus(BuildStatus buildStatus) {
 		this.childStatuses.add(buildStatus);
 	}
 

@@ -10,8 +10,9 @@ public class BuildStatusIndicatorExceptionTest {
 
 	@Test
 	public void shouldPassAlongMessageAndExceptionWhileWrapping() {
-		BuildStatusIndicatorException exception = new BuildStatusIndicatorException(THE_MESSAGE, THE_EXCEPTION);
-		
+		BuildStatusIndicatorException exception = new BuildStatusIndicatorException(
+				THE_MESSAGE, THE_EXCEPTION);
+
 		Assert.assertEquals(THE_MESSAGE, exception.getMessage());
 		Assert.assertEquals(THE_EXCEPTION, exception.getCause());
 	}

@@ -12,14 +12,13 @@ import com.leohart.buildwhisperer.status.BuildStatus;
  */
 public class SimpleBuildStatusBridge implements BuildStatusBridge {
 
-	private static final Log LOG = LogFactory
-			.getLog(SimpleBuildStatusBridge.class);
+	private static final Log LOG = LogFactory.getLog(SimpleBuildStatusBridge.class);
 
 	protected BuildStatusRepository<BuildStatus> repository;
 	protected BuildStatusIndicator indicator;
 
-	public SimpleBuildStatusBridge(final BuildStatusIndicator indicator,
-			final BuildStatusRepository<BuildStatus> repository) {
+	public SimpleBuildStatusBridge(BuildStatusIndicator indicator,
+			BuildStatusRepository<BuildStatus> repository) {
 		this.indicator = indicator;
 		this.repository = repository;
 	}
@@ -29,8 +28,7 @@ public class SimpleBuildStatusBridge implements BuildStatusBridge {
 		SimpleBuildStatusBridge.LOG.info("Getting build status.");
 		BuildStatus status = this.repository.getBuildStatus();
 
-		SimpleBuildStatusBridge.LOG
-				.info("Instructing feedback indicator to indicate status.");
+		SimpleBuildStatusBridge.LOG.info("Instructing feedback indicator to indicate status.");
 		this.indicator.indicate(status);
 	}
 

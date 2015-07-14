@@ -12,14 +12,14 @@ public class PartTimeDecorator extends PoweredBuildStatusIndicatorDecorator {
 	/**
 	 * @param indicator
 	 */
-	public PartTimeDecorator(final PoweredBuildStatusIndicator indicator,
-			final BuildStatusIndicatorTurnOffCriteria turnOffCriteria) {
+	public PartTimeDecorator(PoweredBuildStatusIndicator indicator,
+			BuildStatusIndicatorTurnOffCriteria turnOffCriteria) {
 		super(indicator);
 		this.turnOffCriteria = turnOffCriteria;
 	}
 
 	@Override
-	public void indicate(final BuildStatus status) {
+	public void indicate(BuildStatus status) {
 		if (!this.wasTurnedOff()) {
 			this.indicator.indicate(status);
 		}

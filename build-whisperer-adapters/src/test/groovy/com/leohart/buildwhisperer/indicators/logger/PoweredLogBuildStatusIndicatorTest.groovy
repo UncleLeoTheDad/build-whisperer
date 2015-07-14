@@ -8,7 +8,7 @@ import com.leohart.buildwhisperer.status.SimpleBuildStatus
 public class PoweredLogBuildStatusIndicatorTest {
 
 	/**
-	 * Forgive me father for I have sinned.  I'm not aware of any easy or simple way to capture log4j output for testing 
+	 * Forgive me father for I have sinned.  I'm not aware of any easy or simple way to capture log4j output for testing
 	 * purposes.  For now I'm fooling the coverage stats.
 	 */
 	@Test

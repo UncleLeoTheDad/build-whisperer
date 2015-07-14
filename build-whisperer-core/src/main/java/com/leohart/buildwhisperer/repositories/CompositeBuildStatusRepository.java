@@ -6,8 +6,7 @@ import java.util.List;
 import com.leohart.buildwhisperer.status.BuildStatus;
 import com.leohart.buildwhisperer.status.CompositeBuildStatus;
 
-public class CompositeBuildStatusRepository implements
-		BuildStatusRepository<BuildStatus> {
+public class CompositeBuildStatusRepository implements BuildStatusRepository<BuildStatus> {
 
 	private List<BuildStatusRepository<BuildStatus>> childRepositories = new ArrayList<BuildStatusRepository<BuildStatus>>();
 
@@ -16,13 +15,12 @@ public class CompositeBuildStatusRepository implements
 	}
 
 	public CompositeBuildStatusRepository(
-			final List<BuildStatusRepository<BuildStatus>> childRepositories) {
+			List<BuildStatusRepository<BuildStatus>> childRepositories) {
 		super();
 		this.childRepositories = childRepositories;
 	}
 
-	public void addRepository(
-			final BuildStatusRepository<BuildStatus> repository) {
+	public void addRepository(BuildStatusRepository<BuildStatus> repository) {
 		this.childRepositories.add(repository);
 	}
 

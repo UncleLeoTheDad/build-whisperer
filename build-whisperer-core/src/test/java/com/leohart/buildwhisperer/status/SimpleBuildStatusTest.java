@@ -10,8 +10,7 @@ public class SimpleBuildStatusTest {
 	public void testThatToStringReturnsSuccessIndication() {
 		final String EXPECTED_TO_STRING = "{successful=true}";
 
-		Assert.assertEquals(EXPECTED_TO_STRING, new SimpleBuildStatus(true)
-				.toString());
+		Assert.assertEquals(EXPECTED_TO_STRING, new SimpleBuildStatus(true).toString());
 	}
 
 }

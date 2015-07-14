@@ -17,15 +17,8 @@ public class CompositeBuildStatusRepositoryTest {
 
 	@Before
 	public void setUp() {
-		this.repository = new CompositeBuildStatusRepository(new ArrayList<BuildStatusRepository<BuildStatus>>());
-	}
-	
-	@Test
-	public void testThatEmptyListOfRepositoriesIsCreatedIfNoSetIsProvided(){
-		this.repository = new CompositeBuildStatusRepository();
-		
-		Assert.assertNotNull("Repository list should not have been null: ", this.repository);
-		Assert.assertEquals("Should have been 0 repositories added: ", 0, this.repository.getChildRepositories().size());
+		this.repository = new CompositeBuildStatusRepository(
+				new ArrayList<BuildStatusRepository<BuildStatus>>());
 	}
 
 	@Test
@@ -34,18 +27,24 @@ public class CompositeBuildStatusRepositoryTest {
 
 		this.repository.addRepository(child);
 
-		Assert.assertTrue(this.repository.getChildRepositories()
-				.contains(child));
+		Assert.assertTrue(this.repository.getChildRepositories().contains(child));
+	}
+
+	@Test
+	public void testThatEmptyListOfRepositoriesIsCreatedIfNoSetIsProvided() {
+		this.repository = new CompositeBuildStatusRepository();
+
+		Assert.assertNotNull("Repository list should not have been null: ", this.repository);
+		Assert.assertEquals("Should have been 0 repositories added: ", 0, this.repository
+				.getChildRepositories().size());
 	}
 
 	@Test
 	public void testThatGetBuildStatusCompilesRepositoriesIntoComposite() {
 		BuildStatus status1 = new SimpleBuildStatus(true);
 		BuildStatus status2 = new SimpleBuildStatus(false);
-		BuildStatusRepository<BuildStatus> child1 = new DummyBuildStatusRepository(
-				status1);
-		BuildStatusRepository<BuildStatus> child2 = new DummyBuildStatusRepository(
-				status2);
+		BuildStatusRepository<BuildStatus> child1 = new DummyBuildStatusRepository(status1);
+		BuildStatusRepository<BuildStatus> child2 = new DummyBuildStatusRepository(status2);
 
 		this.repository.addRepository(child1);
 		this.repository.addRepository(child2);

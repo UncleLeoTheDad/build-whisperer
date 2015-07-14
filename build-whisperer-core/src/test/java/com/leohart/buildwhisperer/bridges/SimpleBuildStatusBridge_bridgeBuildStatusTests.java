@@ -14,12 +14,12 @@ import com.leohart.buildwhisperer.status.SimpleBuildStatus;
 public class SimpleBuildStatusBridge_bridgeBuildStatusTests {
 
 	public class AlwaysSuccessOrAlwaysFailedBuildStatusRepository implements
-			BuildStatusRepository<BuildStatus> {
+		BuildStatusRepository<BuildStatus> {
 
 		private BuildStatus buildStatusToReturn;
 
 		public AlwaysSuccessOrAlwaysFailedBuildStatusRepository(
-				final BuildStatus buildStatusToReturn) {
+				BuildStatus buildStatusToReturn) {
 			this.buildStatusToReturn = buildStatusToReturn;
 		}
 
@@ -44,18 +44,15 @@ public class SimpleBuildStatusBridge_bridgeBuildStatusTests {
 		this.shouldCorrectlyBridgeStatus(true);
 	}
 
-	private void shouldCorrectlyBridgeStatus(final boolean successful) {
+	private void shouldCorrectlyBridgeStatus(boolean successful) {
 		final BuildStatus EXPECTED_STATUS = new SimpleBuildStatus(successful);
 
 		this.indicator = new StoreLastIndicatedBuildStatusIndicator();
-		this.repository = new AlwaysSuccessOrAlwaysFailedBuildStatusRepository(
-				EXPECTED_STATUS);
-		this.bridge = new SimpleBuildStatusBridge(this.indicator,
-				this.repository);
+		this.repository = new AlwaysSuccessOrAlwaysFailedBuildStatusRepository(EXPECTED_STATUS);
+		this.bridge = new SimpleBuildStatusBridge(this.indicator, this.repository);
 
 		this.bridge.bridgeBuildStatus();
 
-		Assert.assertEquals(EXPECTED_STATUS,
-				this.indicator.getLastStatusIndicated());
+		Assert.assertEquals(EXPECTED_STATUS, this.indicator.getLastStatusIndicated());
 	}
 }

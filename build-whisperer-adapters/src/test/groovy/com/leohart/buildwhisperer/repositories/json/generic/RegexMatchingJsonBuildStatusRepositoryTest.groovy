@@ -12,7 +12,7 @@ public class RegexMatchingJsonBuildStatusRepositoryTest {
 	private static final String JSON_URL = "Doesn't Matter as Retriver is Mocked";
 	private static final String SUCCESS_REGEX = ".*SUCCESS.*";
 
-	private static final JsonRetriever jsonRetriever = new JsonRetriever () {
+	private static JsonRetriever jsonRetriever = new JsonRetriever () {
 		private String status;
 
 		@Override

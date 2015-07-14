@@ -16,15 +16,14 @@ public class CM17ABuildStatusIndicator implements PoweredBuildStatusIndicator {
 
 	private static final Log LOG = LogFactory.getLog(CM17ABuildStatusIndicator.class);
 
-	private final X10Device passDevice;
-	private final X10Device failDevice;
+	private X10Device passDevice;
+	private X10Device failDevice;
 
 	/**
 	 * @param passDevice
 	 * @param failDevice
 	 */
-	public CM17ABuildStatusIndicator(final X10Device passDevice,
-			final X10Device failDevice) {
+	public CM17ABuildStatusIndicator(X10Device passDevice, X10Device failDevice) {
 		super();
 		this.passDevice = passDevice;
 		this.failDevice = failDevice;
@@ -34,22 +33,19 @@ public class CM17ABuildStatusIndicator implements PoweredBuildStatusIndicator {
 	 * @see com.com.leohart.buildwhisperer.indicator.BuildStatusIndicator#indicate(com.com.leohart.buildwhisperer.buildstatus.BuildStatus)
 	 */
 	@Override
-	public void indicate(final BuildStatus status) {
-		CM17ABuildStatusIndicator.LOG.info("Indicating BuildStatus of "
-				+ status.toString());
+	public void indicate(BuildStatus status) {
+		CM17ABuildStatusIndicator.LOG.info("Indicating BuildStatus of " + status.toString());
 
 		try {
 
 			if (status.isSuccessful()) {
 				this.passDevice.on();
 				this.failDevice.off();
-			}
-			else {
+			} else {
 				this.passDevice.off();
 				this.failDevice.on();
 			}
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new BuildStatusIndicatorException(
 					"Could not send command to BuildStatusIndicator: ", ex);
 		}
@@ -59,10 +55,10 @@ public class CM17ABuildStatusIndicator implements PoweredBuildStatusIndicator {
 	 * This implementation aggregates all passed in status and indicates
 	 * BuildStatus.Failure if any failures are found. If no failures are found,
 	 * BuildStatus.Success is indicated.
-	 * 
+	 *
 	 * @see com.leohart.buildwhisperer.indicators.BuildStatusIndicator#indicate(com.leohart.buildwhisperer.status.BuildStatus[])
 	 */
-	public void indicate(final BuildStatus[] statuses) {
+	public void indicate(BuildStatus[] statuses) {
 		for (BuildStatus status : statuses) {
 			if (!status.isSuccessful()) {
 				this.indicate(new SimpleBuildStatus(false));
@@ -81,8 +77,7 @@ public class CM17ABuildStatusIndicator implements PoweredBuildStatusIndicator {
 		try {
 			this.passDevice.off();
 			this.failDevice.off();
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new BuildStatusIndicatorException(
 					"Could not send command to BuildStatusIndicator: ", ex);
 		}

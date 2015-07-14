@@ -12,15 +12,15 @@ import org.junit.Test;
  */
 public class WorkWeekTurnOffCriteria_shouldTurnOffTests {
 
-	WorkWeekTurnOffCriteria criteria;
-	
 	private static final Integer MONDAY = 1;
+
 	private static final Integer FRIDAY = 5;
 	private static final Integer SEVEN_AM = 7;
 	private static final Integer SIX_AM = 6;
 	private static final Integer SEVEN_PM = 19;
 	private static final Integer FIFTY_NINE_MINUTES = 59;
 	private static final Integer ONE_MINUTE = 1;
+	WorkWeekTurnOffCriteria criteria;
 
 	@Before
 	public void setUp() throws Exception {
@@ -33,23 +33,15 @@ public class WorkWeekTurnOffCriteria_shouldTurnOffTests {
 		this.criteria.setWorkWeekEndDay(FRIDAY);
 		this.criteria.setWorkDayStartHour(SEVEN_AM);
 		this.criteria.setWorkDayEndHour(SEVEN_PM);
-		
-		setCurrentTime(
-				new LocalDateTime().withDayOfWeek(MONDAY)
-									.withHourOfDay(SEVEN_AM) //Just as work starts
-									.withMinuteOfHour(0)
-									.withSecondOfMinute(0)
-									.withMillisOfSecond(0));
-		
+
+		this.setCurrentTime(new LocalDateTime().withDayOfWeek(MONDAY).withHourOfDay(SEVEN_AM)
+		// Just as work starts
+				.withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0));
+
 		Assert.assertFalse(String.format(
 				"Should have been left on (false) for current time %s and criteria %s: ",
-				DateTimeUtils.getPeriodType(PeriodType.dayTime()), this.criteria),
-				this.criteria.shouldTurnOff());
-	}
-
-	private void setCurrentTime(LocalDateTime timeToSet) {
-		DateTimeUtils.setCurrentMillisFixed(timeToSet.toDateTime().toInstant()
-				.getMillis());
+				DateTimeUtils.getPeriodType(PeriodType.dayTime()), this.criteria), this.criteria
+				.shouldTurnOff());
 	}
 
 	@Test
@@ -58,30 +50,30 @@ public class WorkWeekTurnOffCriteria_shouldTurnOffTests {
 		this.criteria.setWorkWeekEndDay(FRIDAY);
 		this.criteria.setWorkDayStartHour(SEVEN_AM);
 		this.criteria.setWorkDayEndHour(SEVEN_PM);
-		
-		setCurrentTime(
-				new LocalDateTime().withDayOfWeek(MONDAY)
-									.withHourOfDay(SIX_AM)
-									.withMinuteOfHour(FIFTY_NINE_MINUTES)
-									.withSecondOfMinute(0)
-									.withMillisOfSecond(0)); //Just before work starts
+
+		this.setCurrentTime(new LocalDateTime().withDayOfWeek(MONDAY).withHourOfDay(SIX_AM)
+				.withMinuteOfHour(FIFTY_NINE_MINUTES).withSecondOfMinute(0).withMillisOfSecond(0)); // Just
+																									// before
+		// work starts
 
 		Assert.assertTrue(String.format(
 				"Should have been turned off (true) for current time %s and criteria %s: ",
-				DateTimeUtils.getPeriodType(PeriodType.dayTime()), this.criteria),
-				this.criteria.shouldTurnOff());
-		
-		setCurrentTime(
-				new LocalDateTime().withDayOfWeek(FRIDAY)
-									.withHourOfDay(SEVEN_PM)
-									.withMinuteOfHour(ONE_MINUTE)
-									.withSecondOfMinute(0)
-									.withMillisOfSecond(0)); //Just before work starts
+				DateTimeUtils.getPeriodType(PeriodType.dayTime()), this.criteria), this.criteria
+				.shouldTurnOff());
+
+		this.setCurrentTime(new LocalDateTime().withDayOfWeek(FRIDAY).withHourOfDay(SEVEN_PM)
+				.withMinuteOfHour(ONE_MINUTE).withSecondOfMinute(0).withMillisOfSecond(0)); // Just
+																							// before
+		// work starts
 
 		Assert.assertTrue(String.format(
 				"Should have been turned off (true) for current time %s and criteria %s: ",
-				DateTimeUtils.getPeriodType(PeriodType.dayTime()), this.criteria),
-				this.criteria.shouldTurnOff());
+				DateTimeUtils.getPeriodType(PeriodType.dayTime()), this.criteria), this.criteria
+				.shouldTurnOff());
+	}
+
+	private void setCurrentTime(LocalDateTime timeToSet) {
+		DateTimeUtils.setCurrentMillisFixed(timeToSet.toDateTime().toInstant().getMillis());
 	}
 
 }

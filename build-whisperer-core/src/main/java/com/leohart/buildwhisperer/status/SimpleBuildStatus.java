@@ -2,9 +2,9 @@ package com.leohart.buildwhisperer.status;
 
 public class SimpleBuildStatus implements BuildStatus {
 
-	private final boolean successful;
+	private boolean successful;
 
-	public SimpleBuildStatus(final boolean successful) {
+	public SimpleBuildStatus(boolean successful) {
 		super();
 		this.successful = successful;
 	}

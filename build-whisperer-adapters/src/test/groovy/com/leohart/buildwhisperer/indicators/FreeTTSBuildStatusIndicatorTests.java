@@ -4,11 +4,11 @@ import org.junit.Test;
 
 public class FreeTTSBuildStatusIndicatorTests {
 
-	//	protected Synthesizer synthesizer;
+	// protected Synthesizer synthesizer;
 
 	@Test
 	public void test() {
-		//TODO: implement me!
+		// TODO: implement me!
 	}
 
 }

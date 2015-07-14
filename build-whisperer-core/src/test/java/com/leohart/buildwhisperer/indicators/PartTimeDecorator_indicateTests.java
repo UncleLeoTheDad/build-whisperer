@@ -13,13 +13,12 @@ import com.leohart.buildwhisperer.status.SimpleBuildStatus;
  */
 public class PartTimeDecorator_indicateTests {
 
-	public class ShouldOrShouldNotBuildStatusIndicatorTurnOffCriteria
-			implements BuildStatusIndicatorTurnOffCriteria {
+	public class ShouldOrShouldNotBuildStatusIndicatorTurnOffCriteria implements
+		BuildStatusIndicatorTurnOffCriteria {
 
 		private boolean shouldTurnOff;
 
-		public ShouldOrShouldNotBuildStatusIndicatorTurnOffCriteria(
-				final boolean shouldTurnOff) {
+		public ShouldOrShouldNotBuildStatusIndicatorTurnOffCriteria(boolean shouldTurnOff) {
 			this.shouldTurnOff = shouldTurnOff;
 		}
 
@@ -31,7 +30,7 @@ public class PartTimeDecorator_indicateTests {
 	}
 
 	public class StoreLastIndicatedPoweredBuildStatusIndicator implements
-			PoweredBuildStatusIndicator {
+		PoweredBuildStatusIndicator {
 
 		private StoreLastIndicatedBuildStatusIndicator storeLastIndicatedIndicator = new StoreLastIndicatedBuildStatusIndicator();
 		private boolean wasTurnedOff;
@@ -41,7 +40,7 @@ public class PartTimeDecorator_indicateTests {
 		}
 
 		@Override
-		public void indicate(final BuildStatus status) {
+		public void indicate(BuildStatus status) {
 			this.storeLastIndicatedIndicator.indicate(status);
 		}
 
@@ -69,16 +68,13 @@ public class PartTimeDecorator_indicateTests {
 		this.shouldIndicateDependingOnWhetherItWasTurnedOff(true);
 	}
 
-	private void shouldIndicateDependingOnWhetherItWasTurnedOff(
-			final boolean wasTurnedOff) {
+	private void shouldIndicateDependingOnWhetherItWasTurnedOff(boolean wasTurnedOff) {
 		final boolean SHOULD_TURN_OFF = wasTurnedOff;
 		final BuildStatus ANY_STATUS = new SimpleBuildStatus(true);
 
-		this.criteria = new ShouldOrShouldNotBuildStatusIndicatorTurnOffCriteria(
-				SHOULD_TURN_OFF);
+		this.criteria = new ShouldOrShouldNotBuildStatusIndicatorTurnOffCriteria(SHOULD_TURN_OFF);
 		this.indicator = new StoreLastIndicatedPoweredBuildStatusIndicator();
-		this.decorator = new PartTimeDecorator(this.indicator,
-				this.criteria);
+		this.decorator = new PartTimeDecorator(this.indicator, this.criteria);
 
 		this.decorator.indicate(ANY_STATUS);
 		Assert.assertEquals(wasTurnedOff != true ? ANY_STATUS : null,

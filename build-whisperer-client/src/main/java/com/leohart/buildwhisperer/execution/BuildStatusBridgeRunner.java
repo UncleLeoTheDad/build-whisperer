@@ -22,10 +22,6 @@ public class BuildStatusBridgeRunner {
 
 	private static BuildStatusBridge buildStatusBridge;
 
-	private BuildStatusBridgeRunner() {
-		super();
-	}
-
 	/**
 	 * @param args
 	 */
@@ -37,33 +33,28 @@ public class BuildStatusBridgeRunner {
 
 			LOG.info("Bridging build status.");
 
-			Integer repeatInterval = BuildStatusBridgeRunner
-					.getRepeatInterval();
+			Integer repeatInterval = BuildStatusBridgeRunner.getRepeatInterval();
 
 			if (repeatInterval == null) {
 				buildStatusBridge.bridgeBuildStatus();
-			}
-			else {
+			} else {
 				LOG.info("Putting runner on repeat.");
 				while (true) {
 					buildStatusBridge.bridgeBuildStatus();
 
-					LOG.info(String
-							.format("Waiting %s seconds", repeatInterval));
+					LOG.info(String.format("Waiting %s seconds", repeatInterval));
 					Thread.sleep(repeatInterval * 1000L);
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			LOG.error("An unexpected exception occured which running: ", e);
 		}
 	}
 
 	private static ApplicationContext getContext(final String[] args) {
 		if (args.length <= 0) {
-			LOG
-					.info("No external config was specified.  Using default on classpath: "
-							+ APP_CONTEXT);
+			LOG.info("No external config was specified.  Using default on classpath: "
+					+ APP_CONTEXT);
 
 			return new ClassPathXmlApplicationContext(APP_CONTEXT);
 		}
@@ -81,8 +72,7 @@ public class BuildStatusBridgeRunner {
 			LOG.debug("No repeat interval specified.");
 			return null;
 		}
-		LOG.debug(String.format("Repeat interval of %s seconds was specified.",
-				repeatInterval));
+		LOG.debug(String.format("Repeat interval of %s seconds was specified.", repeatInterval));
 
 		return Integer.parseInt(repeatInterval);
 	}
@@ -92,8 +82,11 @@ public class BuildStatusBridgeRunner {
 		ApplicationContext context = BuildStatusBridgeRunner.getContext(args);
 
 		LOG.debug("Getting bridge bean");
-		buildStatusBridge = (BuildStatusBridge) context
-				.getBean(BRIDGE_BEAN_NAME);
+		buildStatusBridge = (BuildStatusBridge) context.getBean(BRIDGE_BEAN_NAME);
+	}
+
+	private BuildStatusBridgeRunner() {
+		super();
 	}
 
 }

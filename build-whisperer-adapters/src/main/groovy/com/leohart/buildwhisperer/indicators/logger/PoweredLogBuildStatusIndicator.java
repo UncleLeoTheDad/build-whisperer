@@ -11,9 +11,7 @@ import com.leohart.buildwhisperer.status.BuildStatus;
  * @author Leo Hart
  */
 
-///CLOVER:OFF Not worth testing
-public class PoweredLogBuildStatusIndicator implements
-		PoweredBuildStatusIndicator {
+public class PoweredLogBuildStatusIndicator implements PoweredBuildStatusIndicator {
 
 	private static final Log LOG = LogFactory.getLog(PoweredLogBuildStatusIndicator.class);
 
@@ -21,16 +19,15 @@ public class PoweredLogBuildStatusIndicator implements
 	 * @see com.leohart.buildwhisperer.indicators.BuildStatusIndicator#indicate(com.leohart.buildwhisperer.status.BuildStatus)
 	 */
 	@Override
-	public void indicate(final BuildStatus status) {
+	public void indicate(BuildStatus status) {
 		LOG.info("Device was told to indicate status of " + status);
 	}
 
 	/**
 	 * @see com.leohart.buildwhisperer.indicators.BuildStatusIndicator#indicate(com.leohart.buildwhisperer.status.BuildStatus[])
 	 */
-	public void indicate(final BuildStatus[] statuses) {
-		LOG.info("Device was told to indicate statuses of "
-				+ ArrayUtils.toString(statuses));
+	public void indicate(BuildStatus[] statuses) {
+		LOG.info("Device was told to indicate statuses of " + ArrayUtils.toString(statuses));
 	}
 
 	/**
@@ -42,4 +39,4 @@ public class PoweredLogBuildStatusIndicator implements
 	}
 
 }
-///CLOVER:ON
+// /CLOVER:ON

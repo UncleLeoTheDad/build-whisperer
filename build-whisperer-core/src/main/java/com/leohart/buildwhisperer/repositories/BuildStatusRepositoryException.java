@@ -14,8 +14,7 @@ public class BuildStatusRepositoryException extends RuntimeException {
 	 * @param message
 	 * @param cause
 	 */
-	public BuildStatusRepositoryException(final String message,
-			final Throwable cause) {
+	public BuildStatusRepositoryException(String message, Throwable cause) {
 		super(message, cause);
 	}
 

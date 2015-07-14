@@ -3,8 +3,7 @@ package com.leohart.buildwhisperer.bridges;
 import com.leohart.buildwhisperer.indicators.BuildStatusIndicator;
 import com.leohart.buildwhisperer.status.BuildStatus;
 
-public class StoreLastIndicatedBuildStatusIndicator implements
-		BuildStatusIndicator {
+public class StoreLastIndicatedBuildStatusIndicator implements BuildStatusIndicator {
 
 	private BuildStatus lastStatusIndicated;
 
@@ -13,7 +12,7 @@ public class StoreLastIndicatedBuildStatusIndicator implements
 	}
 
 	@Override
-	public void indicate(final BuildStatus status) {
+	public void indicate(BuildStatus status) {
 		this.lastStatusIndicated = status;
 	}
 

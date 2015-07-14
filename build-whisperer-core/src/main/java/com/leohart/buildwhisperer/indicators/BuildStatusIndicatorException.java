@@ -14,8 +14,7 @@ public class BuildStatusIndicatorException extends RuntimeException {
 	 * @param message
 	 * @param cause
 	 */
-	public BuildStatusIndicatorException(final String message,
-			final Throwable cause) {
+	public BuildStatusIndicatorException(String message, Throwable cause) {
 		super(message, cause);
 	}
 

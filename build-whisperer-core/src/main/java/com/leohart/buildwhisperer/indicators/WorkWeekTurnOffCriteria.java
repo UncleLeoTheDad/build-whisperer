@@ -13,11 +13,9 @@ import org.joda.time.LocalDateTime;
  *         work-week.
  *         </p>
  */
-public class WorkWeekTurnOffCriteria implements
-		BuildStatusIndicatorTurnOffCriteria {
+public class WorkWeekTurnOffCriteria implements BuildStatusIndicatorTurnOffCriteria {
 
-	private static final Log LOG = LogFactory
-			.getLog(WorkWeekTurnOffCriteria.class);
+	private static final Log LOG = LogFactory.getLog(WorkWeekTurnOffCriteria.class);
 
 	public static final int DEFAULT_START_HOUR_OF_DAY = 7;
 	public static final int DEFAULT_END_HOUR_OF_DAY = 19;
@@ -33,7 +31,7 @@ public class WorkWeekTurnOffCriteria implements
 	 * @param endHourOfDay
 	 *            The hour a work-day ends.
 	 */
-	public void setWorkDayEndHour(final int endHourOfDay) {
+	public void setWorkDayEndHour(int endHourOfDay) {
 		this.workDayEndHour = endHourOfDay;
 	}
 
@@ -41,7 +39,7 @@ public class WorkWeekTurnOffCriteria implements
 	 * @param startHourOfDay
 	 *            The hour that a work-day starts.
 	 */
-	public void setWorkDayStartHour(final int startHourOfDay) {
+	public void setWorkDayStartHour(int startHourOfDay) {
 		this.workDayStartHour = startHourOfDay;
 	}
 
@@ -50,7 +48,7 @@ public class WorkWeekTurnOffCriteria implements
 	 *            The day of the week on which the work-week ends.
 	 * @see org.joda.time.DateTimeConstants
 	 */
-	public void setWorkWeekEndDay(final int workWeekEndDay) {
+	public void setWorkWeekEndDay(int workWeekEndDay) {
 		this.workWeekEndDay = workWeekEndDay;
 	}
 
@@ -59,7 +57,7 @@ public class WorkWeekTurnOffCriteria implements
 	 *            The day of the week on which the work-week begins.
 	 * @see org.joda.time.DateTimeConstants
 	 */
-	public void setWorkWeekStartDay(final int workWeekStartDay) {
+	public void setWorkWeekStartDay(int workWeekStartDay) {
 		this.workWeekStartDay = workWeekStartDay;
 	}
 
@@ -71,38 +69,34 @@ public class WorkWeekTurnOffCriteria implements
 		LOG.debug("Determining whether to turn indicator off based on work-week.");
 
 		LocalDateTime now = new LocalDateTime();
-		
-		LocalDateTime workWeekStart = now.withDayOfWeek(workWeekStartDay)
-										 .withHourOfDay(workDayStartHour)
-										 .withMinuteOfHour(0)
-										 .withSecondOfMinute(0)
-										 .withMillisOfSecond(0);
-		
-		LocalDateTime workWeekEnd = now.withDayOfWeek(workWeekEndDay)
-									   .withHourOfDay(workDayEndHour)
-									   .withMinuteOfHour(0)
-									   .withSecondOfMinute(0)
-									   .withMillisOfSecond(0);
-		
+
+		LocalDateTime workWeekStart = now.withDayOfWeek(this.workWeekStartDay)
+				.withHourOfDay(this.workDayStartHour).withMinuteOfHour(0).withSecondOfMinute(0)
+				.withMillisOfSecond(0);
+
+		LocalDateTime workWeekEnd = now.withDayOfWeek(this.workWeekEndDay)
+				.withHourOfDay(this.workDayEndHour).withMinuteOfHour(0).withSecondOfMinute(0)
+				.withMillisOfSecond(0);
+
 		Interval workWeek = new Interval(workWeekStart.toDateTime(), workWeekEnd.toDateTime());
-		LOG.info("Workweek: " + workWeek);		
-		
+		LOG.info("Workweek: " + workWeek);
+
 		if (workWeek.contains(now.toDateTime())) {
 
 			LOG.info("Device should not be turned off @" + now);
 			return false;
 		}
 
-		LOG.info("Device should be turned off @" +  now);
+		LOG.info("Device should be turned off @" + now);
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return String
-				.format("WorkWeekTurnOffCriteria [workWeekStartsAt %s@%s and workWeekEndsAt %s@%s]",
-						this.workWeekStartDay, this.workDayStartHour,
-						this.workWeekEndDay, this.workDayEndHour);
+		return String.format(
+				"WorkWeekTurnOffCriteria [workWeekStartsAt %s@%s and workWeekEndsAt %s@%s]",
+				this.workWeekStartDay, this.workDayStartHour, this.workWeekEndDay,
+				this.workDayEndHour);
 	}
 
 }

@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.leohart.buildwhisperer.indicators.BuildStatusIndicatorException;
-import com.leohart.buildwhisperer.indicators.cm17a.CM17ABuildStatusIndicator;
 import com.leohart.buildwhisperer.status.BuildStatus;
 import com.leohart.buildwhisperer.status.SimpleBuildStatus;
 import com.pragauto.X10Device;
@@ -27,8 +26,7 @@ public class CM17ABuildStatusIndicatorTest {
 	public void setUp() throws Exception {
 		this.passDevice = EasyMock.createMock(X10Device.class);
 		this.failDevice = EasyMock.createMock(X10Device.class);
-		this.indicator = new CM17ABuildStatusIndicator(this.passDevice,
-				this.failDevice);
+		this.indicator = new CM17ABuildStatusIndicator(this.passDevice, this.failDevice);
 	}
 
 	/**
@@ -39,15 +37,14 @@ public class CM17ABuildStatusIndicatorTest {
 	@Test
 	public void testIndicateArrayFailure() throws Exception {
 		this.passDevice.off();
-		EasyMock.expectLastCall().once();
+		org.easymock.EasyMock.expectLastCall().once();
 		this.failDevice.on();
-		EasyMock.expectLastCall().once();
+		org.easymock.EasyMock.expectLastCall().once();
 
 		EasyMock.replay(this.passDevice);
 		EasyMock.replay(this.failDevice);
 
-		BuildStatus[] statuses = { new SimpleBuildStatus(true),
-				new SimpleBuildStatus(false) };
+		BuildStatus[] statuses = { new SimpleBuildStatus(true), new SimpleBuildStatus(false) };
 
 		this.indicator.indicate(statuses);
 	}
@@ -60,15 +57,14 @@ public class CM17ABuildStatusIndicatorTest {
 	@Test
 	public void testIndicateArraySuccess() throws Exception {
 		this.passDevice.on();
-		EasyMock.expectLastCall().once();
+		org.easymock.EasyMock.expectLastCall().once();
 		this.failDevice.off();
-		EasyMock.expectLastCall().once();
+		org.easymock.EasyMock.expectLastCall().once();
 
 		EasyMock.replay(this.passDevice);
 		EasyMock.replay(this.failDevice);
 
-		BuildStatus[] statuses = { new SimpleBuildStatus(true),
-				new SimpleBuildStatus(true) };
+		BuildStatus[] statuses = { new SimpleBuildStatus(true), new SimpleBuildStatus(true) };
 
 		this.indicator.indicate(statuses);
 	}
@@ -81,7 +77,7 @@ public class CM17ABuildStatusIndicatorTest {
 	@Test(expected = BuildStatusIndicatorException.class)
 	public void testIndicateException() throws Exception {
 		this.passDevice.on();
-		EasyMock.expectLastCall().andThrow(new RuntimeException());
+		org.easymock.EasyMock.expectLastCall().andThrow(new RuntimeException());
 
 		EasyMock.replay(this.passDevice);
 
@@ -96,9 +92,9 @@ public class CM17ABuildStatusIndicatorTest {
 	@Test
 	public void testIndicateFailure() throws Exception {
 		this.passDevice.off();
-		EasyMock.expectLastCall().once();
+		org.easymock.EasyMock.expectLastCall().once();
 		this.failDevice.on();
-		EasyMock.expectLastCall().once();
+		org.easymock.EasyMock.expectLastCall().once();
 
 		EasyMock.replay(this.passDevice);
 		EasyMock.replay(this.failDevice);
@@ -114,9 +110,9 @@ public class CM17ABuildStatusIndicatorTest {
 	@Test
 	public void testIndicateSuccess() throws Exception {
 		this.passDevice.on();
-		EasyMock.expectLastCall().once();
+		org.easymock.EasyMock.expectLastCall().once();
 		this.failDevice.off();
-		EasyMock.expectLastCall().once();
+		org.easymock.EasyMock.expectLastCall().once();
 
 		EasyMock.replay(this.passDevice);
 		EasyMock.replay(this.failDevice);
@@ -132,9 +128,9 @@ public class CM17ABuildStatusIndicatorTest {
 	@Test
 	public void testTurnOff() throws Exception {
 		this.passDevice.off();
-		EasyMock.expectLastCall().once();
+		org.easymock.EasyMock.expectLastCall().once();
 		this.failDevice.off();
-		EasyMock.expectLastCall().once();
+		org.easymock.EasyMock.expectLastCall().once();
 
 		EasyMock.replay(this.passDevice);
 		EasyMock.replay(this.failDevice);
@@ -150,7 +146,7 @@ public class CM17ABuildStatusIndicatorTest {
 	@Test(expected = BuildStatusIndicatorException.class)
 	public void testTurnOffException() throws Exception {
 		this.passDevice.off();
-		EasyMock.expectLastCall().andThrow(new RuntimeException());
+		org.easymock.EasyMock.expectLastCall().andThrow(new RuntimeException());
 
 		EasyMock.replay(this.passDevice);
 
