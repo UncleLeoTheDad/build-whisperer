@@ -6,7 +6,6 @@ dependencies {
     compile libraries."commons-httpclient"
     compile libraries."commons-lang"
     compile libraries."commons-logging"
-    compile libraries."freetts"
 	compile libraries."groovy-all"
 	compile libraries."http-builder"
     compile libraries."jackson-core-lgpl"
