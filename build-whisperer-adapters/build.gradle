@@ -2,6 +2,7 @@
 description = 'build-whisperer-adapters'
 
 dependencies {
+	compile libraries."blinkytape"
     compile libraries."comm"
     compile libraries."commons-httpclient"
     compile libraries."commons-lang"
@@ -11,9 +12,11 @@ dependencies {
     compile libraries."jackson-core-lgpl"
     compile libraries."jackson-mapper-lgpl"
     compile libraries."jdom"
+	compile libraries."jssc"
     compile libraries."pragauto-x10"
     compile libraries."rome"
     compile libraries."spring-core"
+	compile libraries."spring-context"
     compile project(':build-whisperer-core')
     runtime libraries."log4j"
     runtime libraries."micheldalal-x10"

@@ -1,6 +1,7 @@
 //All libraries and versions are configured here and reused in subprojects to minimize conflicts
 ext.libraries = [
 	"asm-all": "asm:asm-all:3.3.1",
+	"blinkytape": "com.leohart:blinkytape:1.0",
 	"comm": "javax.comm:comm:2.0.3",
 	"commons-httpclient": "commons-httpclient:commons-httpclient:3.1",
 	"commons-lang": "commons-lang:commons-lang:2.4",
@@ -15,13 +16,14 @@ ext.libraries = [
 	"jackson-mapper-lgpl": "org.codehaus.jackson:jackson-mapper-lgpl:1.7.1",
 	"jdom": "jdom:jdom:1.0",
 	"joda-time": "joda-time:joda-time:2.2",
+	"jssc": "org.scream3r:jssc:2.8.0",
 	"junit": "junit:junit:4.5",
 	"log4j": "log4j:log4j:1.2.14",
 	"micheldalal-x10": "com.micheldalal.x10:x10:1.0.1",
 	"pragauto-x10": "com.pragauto:x10:1.0",
 	"rome": "rome:rome:0.9",
-	"spring-context": "org.springframework:spring-context:2.5.6",
-	"spring-core": "org.springframework:spring-core:2.5.6"
+	"spring-context": "org.springframework:spring-context:4.0.3.RELEASE",
+	"spring-core": "org.springframework:spring-core:4.0.3.RELEASE"
 ]
 
 allprojects  {
