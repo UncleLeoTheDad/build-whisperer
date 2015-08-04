@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:task="http://www.springframework.org/schema/task" 
-	xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd 
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
 http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.1.xsd
-http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd">
-
+http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd">
 
 	<context:annotation-config />
 	<context:component-scan base-package="com.leohart.buildwhisperer" />
 	<task:annotation-driven />
 
-	<bean id="repository"
+	<bean id="jsonRetriever"
+		class="com.leohart.buildwhisperer.repositories.json.generic.RESTClientJsonRetriever">
+		<constructor-arg name="userName" value="someuser" />
+		<constructor-arg name="password" value="somepass" />
+	</bean>
+	
+	<bean id="firstRepository"
 		class="com.leohart.buildwhisperer.repositories.json.generic.RegexMatchingJsonBuildStatusRepository">
+		<constructor-arg name="jsonRetriever" ref="jsonRetriever" />
 		<constructor-arg name="jsonURL"
 			value="https://ci.jenkins-ci.org/job/core_selenium-test/lastBuild/api/json?tree=result" />
+		<constructor-arg name="jsonTraversalPath" value="result" />
 		<constructor-arg name="successRegEx" value=".*SUCCESS.*" />
+	</bean>	
+	
+	<bean id="repository" class="com.leohart.buildwhisperer.repositories.CompositeBuildStatusRepository">
+	<constructor-arg name="childRepositories">
+		<util:set>
+			<ref bean="firstRepository"/>
+		</util:set>
+	</constructor-arg>
 	</bean>
 
 	<bean id="controller" class="com.leohart.blinkytape.SerialBlinkyTapeController">

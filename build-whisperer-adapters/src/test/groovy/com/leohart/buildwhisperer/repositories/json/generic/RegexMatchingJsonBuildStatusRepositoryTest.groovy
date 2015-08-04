@@ -9,7 +9,7 @@ import com.leohart.buildwhisperer.status.BuildStatus
 
 public class RegexMatchingJsonBuildStatusRepositoryTest {
 
-	private static final String JSON_URL = "Doesn't Matter as Retriver is Mocked";
+	private static final String JSON_URL = "Doesn't Matter as Retriever is Mocked";
 	private static final String SUCCESS_REGEX = ".*SUCCESS.*";
 
 	private static JsonRetriever jsonRetriever = new JsonRetriever () {
@@ -26,9 +26,31 @@ public class RegexMatchingJsonBuildStatusRepositoryTest {
 		}
 	};
 
+	private static JsonRetriever nestedJsonRetriever = new JsonRetriever () {
+		private String status;
 
+		@Override
+		public Object retrieve(String jsonApiUrl) {
+			String json = '{"result":{"status":"' + this.status + '"}}';
+			return new JsonSlurper().parseText(json);
+		}
+
+		public void setStatus(String status) {
+			this.status = status;
+		}
+	};
 
 	private RegexMatchingJsonBuildStatusRepository repository;
+	
+	@Test
+	public void shouldBeAbleToTraverseJsonBeforeLookingForSuccess() {
+		this.nestedJsonRetriever.setStatus("SUCCESS");
+		repository = new RegexMatchingJsonBuildStatusRepository(nestedJsonRetriever, JSON_URL, "result.status", SUCCESS_REGEX);
+
+		BuildStatus buildStatus = repository.getBuildStatus();
+
+		Assert.assertTrue("Build should have been successful, but was ${buildStatus}: ", buildStatus.isSuccessful());
+	}
 
 	@Test
 	public void shouldReturnSuccessfulIfRegexMatchesJsonRetrieved() {
@@ -39,7 +61,7 @@ public class RegexMatchingJsonBuildStatusRepositoryTest {
 
 		Assert.assertTrue("Build should have been successful, but was ${buildStatus}: ", buildStatus.isSuccessful());
 	}
-
+	
 	@Test
 	public void shouldReturnFailureIfRegexDoesNotMatchJsonRetrieved() {
 		this.jsonRetriever.setStatus("FAILURE");
