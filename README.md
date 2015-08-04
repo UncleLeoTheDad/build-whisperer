@@ -10,10 +10,14 @@ JSON-RegExp - works with Jenkins, Hudson, Bamboo and anythng that has a JSON API
 # Status Indicators
 The following Indicator implementations are supported:
 * log4j 
-* BlinkyTape: http://blinkinlabs.com/blinkytape/, powered by https://github.com/leojhartiv/BlinkyTape
+* BlinkyTape: 
+ * Overview of device: http://blinkinlabs.com/blinkytape/
+ * Control powered by: https://github.com/leojhartiv/BlinkyTape
 * CM17a:
-** http://www.thex10shop.com/product/x10-x-10-firecracker-serial-computer-interface-cm17a
-** X10 for Lava Lamps or other electronic lamp devices
+ * X10 for Lava Lamps or other electronic lamp devices
+ * Overview of device: http://www.thex10shop.com/product/x10-x-10-firecracker-serial-computer-interface-cm17a * 
+
+On the roadmap:
 * [In progress]Speech: http://freetts.sourceforge.net/javadoc/com/sun/speech/freetts/Voice.html
 
 # Usage
