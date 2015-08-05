@@ -34,3 +34,6 @@ https://github.com/leojhartiv/build-whisperer/tree/master/build-whisperer-client
 
 ## CM17a (controlling electrical appliances like lava lamps)
 To use the CM17a functionality, you need to go to build-whisperer-adapters/lib and execute installSerialCommSupportForX10.bat(sh) on the system that will be running build-whisperer.  This installs comm.jar and javax.comm.properties into your JRE.
+
+# Links:
+* The project's Continous Integration server: https://snap-ci.com/leojhartiv/build-whisperer
