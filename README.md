@@ -4,8 +4,7 @@ The "Build Whisperer" provides a framework for bridging the status (currently ju
 
 # Status Readers
 Currently, the whisperer has the following BuildStatusRepository (status reader) types:
-
-JSON-RegExp - works with Jenkins, Hudson, Bamboo and anythng that has a JSON API
+* JSON-RegExp - works with Jenkins, Hudson, Bamboo and anythng that has a JSON API
 
 # Status Indicators
 The following Indicator implementations are supported:
