@@ -17,7 +17,8 @@ The following Indicator implementations are supported:
  * Overview of device: http://www.thex10shop.com/product/x10-x-10-firecracker-serial-computer-interface-cm17a * 
 
 On the roadmap:
-* [In progress]Speech: http://freetts.sourceforge.net/javadoc/com/sun/speech/freetts/Voice.html
+* Speech: http://freetts.sourceforge.net/javadoc/com/sun/speech/freetts/Voice.html
+* USB Rocket Launcher: http://www.thinkgeek.com/product/8a0f/
 
 # Usage
 It is all wired together using spring, allowing you a user to create their own custom BuildStatusRepositories and FeedBackDevices, allowing for simple configuration of new status bridging strategies.
