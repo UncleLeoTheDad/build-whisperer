@@ -1,7 +1,11 @@
+
+
 plugins {
 	id 'groovy'
 	id 'com.github.johnrengelman.shadow' version '1.2.1'
 }
+
+apply plugin: 'application'
 
 description = 'build-whisperer-client'
 

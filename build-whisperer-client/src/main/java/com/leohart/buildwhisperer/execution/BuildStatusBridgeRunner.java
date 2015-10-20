@@ -21,7 +21,7 @@ public class BuildStatusBridgeRunner {
 	private static final Log LOG = LogFactory.getLog(BuildStatusBridgeRunner.class);
 
 	private static BuildStatusBridge buildStatusBridge;
-	
+
 	private BuildStatusBridgeRunner() {
 		super();
 	}
@@ -44,10 +44,15 @@ public class BuildStatusBridgeRunner {
 			} else {
 				LOG.info("Putting runner on repeat.");
 				while (true) {
-					buildStatusBridge.bridgeBuildStatus();
+					try {
+						buildStatusBridge.bridgeBuildStatus();
 
-					LOG.info(String.format("Waiting %s seconds", repeatInterval));
-					Thread.sleep(repeatInterval * 1000L);
+						LOG.info(String.format("Waiting %s seconds", repeatInterval));
+						Thread.sleep(repeatInterval * 1000L);
+
+					} catch (Exception ex) {
+						LOG.error("An unexpected exception occured which running:", ex);
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -57,8 +62,7 @@ public class BuildStatusBridgeRunner {
 
 	private static ApplicationContext getContext(final String[] args) {
 		if (args.length <= 0) {
-			LOG.info("No external config was specified.  Using default on classpath: "
-					+ APP_CONTEXT);
+			LOG.info("No external config was specified.  Using default on classpath: " + APP_CONTEXT);
 
 			return new ClassPathXmlApplicationContext(APP_CONTEXT);
 		}
