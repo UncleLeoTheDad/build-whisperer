@@ -9,7 +9,7 @@ class DefaultJsonTraverser implements JsonTraverser {
 
 	@Override
 	public Object traverse(Object json, String traversalPath) {
-		LOG.info("Traversing ${json} with ${traversalPath}");
+		LOG.info("Traversing ${json} with \"${traversalPath}\"");
 		
 		def result = json;		
 		

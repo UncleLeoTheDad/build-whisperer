@@ -15,6 +15,7 @@ dependencies {
 	compile libraries."jssc"
     compile libraries."pragauto-x10"
     compile libraries."rome"
+	compile libraries."slf4j"
     compile libraries."spring-core"
 	compile libraries."spring-context"
     compile project(':build-whisperer-core')

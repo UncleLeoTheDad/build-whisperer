@@ -22,6 +22,7 @@ ext.libraries = [
 	"micheldalal-x10": "com.micheldalal.x10:x10:1.0.1",
 	"pragauto-x10": "com.pragauto:x10:1.0",
 	"rome": "rome:rome:0.9",
+	"slf4j": "org.slf4j:slf4j-api:1.7.12",
 	"spring-context": "org.springframework:spring-context:4.0.3.RELEASE",
 	"spring-core": "org.springframework:spring-core:4.0.3.RELEASE"
 ]

@@ -1,13 +1,19 @@
 package com.leohart.buildwhisperer.repositories.json.generic
 
+import groovy.util.logging.Commons
 import groovyx.net.http.ContentType
 import groovyx.net.http.RESTClient
 
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
 import org.apache.http.HttpRequest
 import org.apache.http.HttpRequestInterceptor
 import org.apache.http.protocol.HttpContext
 
+@Commons
 class RESTClientJsonRetriever implements JsonRetriever {
+	
+	//private static final Log LOG = LogFactory.getLog(RESTClientJsonRetriever.class);
 
 	private String userName;
 	private String password;
@@ -26,16 +32,26 @@ class RESTClientJsonRetriever implements JsonRetriever {
 	public Object retrieve(String jsonApiUrl) {
 		RESTClient rest = new RESTClient("");
 
-		if (userName !=null){
+		if (userName != null){
+			log.info("Authenticating wth user ${userName}");
+			
+			def login = "${userName}:${password}";
+			
 			rest.client.addRequestInterceptor(new HttpRequestInterceptor() {
 						void process(HttpRequest httpRequest, HttpContext httpContext) {
-							httpRequest.addHeader('Authorization', 'Basic ' + '${userName}:${password}'.bytes.encodeBase64().toString())
+							httpRequest.addHeader("Authorization", "Basic " + login.bytes.encodeBase64().toString());
 						}
 					});
 		}
-
+		
 		rest.get(uri: jsonApiUrl,
-				 contentType: ContentType.JSON) { response, json -> return json };
+				 contentType: ContentType.JSON) { response, json -> 
+				 	log.debug("Headers: ");
+					response.getHeaders().each{log.debug("\t${it.name}=${it.value}")};
+					log.debug("JSON: ${json}")
+					
+				 	return json ;
+				 };
 	}
 
 }
