@@ -37,3 +37,5 @@ To use the CM17a functionality, you need to go to build-whisperer-adapters/lib a
 
 # Links:
 * The project's Continous Integration server: https://snap-ci.com/leojhartiv/build-whisperer
+
+[![](https://codescene.io/projects/1213/status.svg) Get more details at **codescene.io**.](https://codescene.io/projects/1213/jobs/latest-successful/results)
