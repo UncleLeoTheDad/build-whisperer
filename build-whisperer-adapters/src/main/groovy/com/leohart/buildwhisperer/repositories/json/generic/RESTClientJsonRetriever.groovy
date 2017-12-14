@@ -34,7 +34,7 @@ class RESTClientJsonRetriever implements JsonRetriever {
 
 		if (userName != null){
 			log.info("Authenticating wth user ${userName}");
-			
+			/*See https://weblogs.java.net/blog/rah003/archive/2013/02/20/jira-groovy-and-rest-it for details around authT*/ 
 			def login = "${userName}:${password}";
 			
 			rest.client.addRequestInterceptor(new HttpRequestInterceptor() {
@@ -44,14 +44,19 @@ class RESTClientJsonRetriever implements JsonRetriever {
 					});
 		}
 		
-		rest.get(uri: jsonApiUrl,
-				 contentType: ContentType.JSON) { response, json -> 
-				 	log.debug("Headers: ");
-					response.getHeaders().each{log.debug("\t${it.name}=${it.value}")};
-					log.debug("JSON: ${json}")
-					
-				 	return json ;
-				 };
+		try{
+			rest.get(uri: jsonApiUrl,
+					 contentType: ContentType.JSON) { response, json -> 
+					 	log.debug("Headers: ");
+						response.getHeaders().each{log.debug("\t${it.name}=${it.value}")};
+						log.debug("JSON: ${json}")
+						
+					 	return json ;
+					 };
+		}
+		catch(Throwable ex){
+			throw new JsonRetrieverException("JSON retrieval failed while parsing ${jsonApiUrl}.  Is destination service down?", ex);
+		}
 	}
 
 }
