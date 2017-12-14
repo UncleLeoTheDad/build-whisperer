@@ -3,6 +3,7 @@ package com.leohart.buildwhisperer.repositories.json.generic;
 import groovy.json.JsonSlurper
 
 import org.junit.Assert
+import org.junit.Ignore
 import org.junit.Test
 
 import com.leohart.buildwhisperer.status.BuildStatus
@@ -16,6 +17,7 @@ public class RegexMatchingJsonBuildStatusRepositoryIntegrationTest {
 	private RegexMatchingJsonBuildStatusRepository repository;
 
 	@Test
+	@Ignore //Don't use in CI
 	public void shouldReturnSuccessfulIfRegexMatchesJsonRetrieved() {
 		repository = new RegexMatchingJsonBuildStatusRepository(JSON_URL, SUCCESS_REGEX);
 

@@ -13,9 +13,6 @@ target-eclipse
 
 #gradle
 .gradle/
-gradlew
-gradlew.bat
-gradle/
 build/
 /bin/
 bin/
